@@ -2,13 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>GCC Finance Tools | Salary, VAT, Invoice & Gratuity Calculators</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        GCC Finance Tools | Salary, VAT, Invoice & Gratuity Calculators
+    </title>
 
     <meta
         name="description"
-        content="Free GCC finance tools for Qatar, Saudi Arabia, UAE, Kuwait, Oman and Bahrain. Use salary, VAT, invoice and gratuity calculators for GCC countries."
+        content="Free GCC finance tools including salary, VAT, invoice and gratuity calculators for Qatar, Saudi Arabia, UAE, Kuwait, Oman and Bahrain."
     >
 
     <meta
@@ -28,17 +34,12 @@
 
     <meta
         property="og:title"
-        content="GCC Finance Tools | Salary, VAT, Invoice & Gratuity Calculators"
+        content="GCC Finance Tools"
     >
 
     <meta
         property="og:description"
-        content="Simple finance and business tools for Qatar, Saudi Arabia, UAE, Kuwait, Oman and Bahrain."
-    >
-
-    <meta
-        property="og:url"
-        content="https://gccfinancetools.github.io/gcc-finance-tools/"
+        content="Simple salary, VAT, invoice and gratuity tools for Qatar, Saudi Arabia, UAE, Kuwait, Oman and Bahrain."
     >
 
     <meta
@@ -46,21 +47,17 @@
         content="website"
     >
 
+    <meta
+        property="og:url"
+        content="https://gccfinancetools.github.io/gcc-finance-tools/"
+    >
+
     <link rel="stylesheet" href="style.css">
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-    </script>
-
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
-    </script>
 </head>
 
 <body>
 
 <header class="header">
-
     <div class="container">
 
         <h1>GCC Finance Tools</h1>
@@ -69,1315 +66,1081 @@
             Simple finance and business tools for the GCC
         </p>
 
+        <nav class="main-menu">
+            <button type="button" onclick="goHome()">Home</button>
+            <button type="button" onclick="showPage('about')">About Us</button>
+            <button type="button" onclick="showPage('notes')">Notes & Guides</button>
+            <button type="button" onclick="showPage('careers')">Careers</button>
+            <button type="button" onclick="showPage('contact')">Contact Us</button>
+        </nav>
+
     </div>
-
-    <nav class="main-menu">
-
-        <button type="button" onclick="goHome()">
-            Home
-        </button>
-
-        <button type="button" onclick="showTool('dashboard')">
-            Tools
-        </button>
-
-        <button type="button" onclick="showPage('about')">
-            About Us
-        </button>
-
-        <button type="button" onclick="showPage('notes')">
-            Notes & Guides
-        </button>
-
-        <button type="button" onclick="showPage('careers')">
-            Careers
-        </button>
-
-        <button type="button" onclick="showPage('contact')">
-            Contact Us
-        </button>
-
-    </nav>
-
 </header>
 
 
-<!-- COUNTRY -->
+<main>
 
-<section class="country-section">
+    <!-- COUNTRY SELECTOR -->
 
-    <div class="container">
+    <section class="country-section">
+        <div class="container">
 
-        <label for="country">
-            Select Country
-        </label>
-
-        <select id="country">
-
-            <option value="Qatar">
-                Qatar
-            </option>
-
-            <option value="Saudi Arabia">
-                Saudi Arabia
-            </option>
-
-            <option value="United Arab Emirates">
-                United Arab Emirates
-            </option>
-
-            <option value="Kuwait">
-                Kuwait
-            </option>
-
-            <option value="Oman">
-                Oman
-            </option>
-
-            <option value="Bahrain">
-                Bahrain
-            </option>
-
-        </select>
-
-    </div>
-
-</section>
-
-
-<main class="container">
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<section
-    id="dashboard"
-    class="dashboard"
-    style="display: grid;"
->
-
-    <div
-        class="tool-card"
-        onclick="showTool('salary')"
-    >
-
-        <div class="tool-icon">
-            💰
-        </div>
-
-        <h2>
-            Salary Calculator
-        </h2>
-
-        <p>
-            Calculate your net salary after allowances and deductions
-            for GCC countries.
-        </p>
-
-    </div>
-
-
-    <div
-        class="tool-card"
-        onclick="showTool('invoice')"
-    >
-
-        <div class="tool-icon">
-            🧾
-        </div>
-
-        <h2>
-            Invoice Generator
-        </h2>
-
-        <p>
-            Create professional invoices for businesses across the GCC
-            and download them as PDF.
-        </p>
-
-    </div>
-
-
-    <div
-        class="tool-card"
-        onclick="showTool('vat')"
-    >
-
-        <div class="tool-icon">
-            📊
-        </div>
-
-        <h2>
-            VAT Calculator
-        </h2>
-
-        <p>
-            Calculate VAT and total amounts based on the selected
-            GCC country.
-        </p>
-
-    </div>
-
-
-    <div
-        class="tool-card"
-        onclick="showTool('gratuity')"
-    >
-
-        <div class="tool-icon">
-            🎁
-        </div>
-
-        <h2>
-            Gratuity / End-of-Service Calculator
-        </h2>
-
-        <p>
-            Estimate end-of-service gratuity based on salary and
-            service period.
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     GCC SEO CONTENT
-========================= -->
-
-<section class="tool-section content-page">
-
-    <h2>
-        Free GCC Finance Calculators
-    </h2>
-
-    <p>
-        GCC Finance Tools provides simple online finance and business
-        calculators for Qatar, Saudi Arabia, the United Arab Emirates,
-        Kuwait, Oman and Bahrain.
-    </p>
-
-    <p>
-        Our tools include salary calculators, VAT calculators, invoice
-        generators and gratuity or end-of-service calculators for users
-        across the Gulf Cooperation Council.
-    </p>
-
-
-    <h2>
-        Finance Tools for Qatar
-    </h2>
-
-    <p>
-        Use our Qatar salary calculator, Qatar VAT calculator, Qatar
-        invoice generator and Qatar gratuity or end-of-service calculator
-        for common financial calculations.
-    </p>
-
-
-    <h2>
-        Finance Tools for Saudi Arabia
-    </h2>
-
-    <p>
-        Use our Saudi Arabia salary calculator, Saudi VAT calculator,
-        Saudi invoice generator and Saudi gratuity or end-of-service
-        calculator for common financial calculations.
-    </p>
-
-
-    <h2>
-        Finance Tools for the United Arab Emirates
-    </h2>
-
-    <p>
-        Use our UAE salary calculator, UAE VAT calculator, UAE invoice
-        generator and UAE gratuity or end-of-service calculator for
-        common financial calculations.
-    </p>
-
-
-    <h2>
-        Finance Tools for Kuwait
-    </h2>
-
-    <p>
-        Use our Kuwait salary calculator, Kuwait VAT calculator, Kuwait
-        invoice generator and Kuwait gratuity or end-of-service
-        calculator for common financial calculations.
-    </p>
-
-
-    <h2>
-        Finance Tools for Oman
-    </h2>
-
-    <p>
-        Use our Oman salary calculator, Oman VAT calculator, Oman invoice
-        generator and Oman gratuity or end-of-service calculator for
-        common financial calculations.
-    </p>
-
-
-    <h2>
-        Finance Tools for Bahrain
-    </h2>
-
-    <p>
-        Use our Bahrain salary calculator, Bahrain VAT calculator,
-        Bahrain invoice generator and Bahrain gratuity or end-of-service
-        calculator for common financial calculations.
-    </p>
-
-
-    <h2>
-        GCC Salary, VAT, Invoice and Gratuity Tools
-    </h2>
-
-    <p>
-        Select your country above and use the available GCC finance tools.
-        The website is designed to provide simple online calculations for
-        employees, businesses and individuals across the GCC.
-    </p>
-
-</section>
-
-
-<!-- =========================
-     ABOUT US
-========================= -->
-
-<section
-    id="about"
-    class="tool-section content-page"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            About Us
-        </h2>
-
-    </div>
-
-    <p>
-        GCC Finance Tools provides simple online finance and business
-        calculators designed for users across the Gulf Cooperation Council
-        countries.
-    </p>
-
-    <p>
-        Our tools are designed to make common financial calculations
-        easier and faster, including salary calculations, VAT calculations,
-        invoice creation and gratuity estimates.
-    </p>
-
-    <p>
-        The website supports users in Qatar, Saudi Arabia, the United Arab
-        Emirates, Kuwait, Oman and Bahrain.
-    </p>
-
-</section>
-
-
-<!-- =========================
-     NOTES & GUIDES
-========================= -->
-
-<section
-    id="notes"
-    class="tool-section content-page"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            Notes & Guides
-        </h2>
-
-    </div>
-
-
-    <h3>
-        Salary Calculator
-    </h3>
-
-    <p>
-        Use the salary calculator to calculate net salary after adding
-        allowances and deducting applicable deductions.
-    </p>
-
-
-    <h3>
-        VAT Calculator
-    </h3>
-
-    <p>
-        Select the applicable GCC country and the VAT calculator will use
-        the VAT rate configured for that country.
-    </p>
-
-
-    <h3>
-        Invoice Generator
-    </h3>
-
-    <p>
-        The invoice generator allows you to enter company information,
-        customer information, invoice items, VAT and payment details.
-    </p>
-
-
-    <h3>
-        Gratuity / End-of-Service Calculator
-    </h3>
-
-    <p>
-        The gratuity calculator provides an estimate based on the salary,
-        years of service and days used for the calculation.
-    </p>
-
-
-    <h3>
-        GCC Countries Covered
-    </h3>
-
-    <p>
-        GCC Finance Tools currently provides country selection for Qatar,
-        Saudi Arabia, the United Arab Emirates, Kuwait, Oman and Bahrain.
-    </p>
-
-</section>
-
-
-<!-- =========================
-     CAREERS
-========================= -->
-
-<section
-    id="careers"
-    class="tool-section content-page"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            Careers
-        </h2>
-
-    </div>
-
-    <p>
-        We are interested in hearing from people who are passionate about
-        finance, accounting, technology and useful online tools.
-    </p>
-
-    <p>
-        Career opportunities will be published here when available.
-    </p>
-
-</section>
-
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section
-    id="contact"
-    class="tool-section content-page"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            Contact Us
-        </h2>
-
-    </div>
-
-    <p>
-        If you have feedback, suggestions or questions about GCC Finance
-        Tools, please contact us.
-    </p>
-
-    <p>
-        Email: contact@gccfinancetools.com
-    </p>
-
-</section>
-
-
-<!-- =========================
-     SALARY CALCULATOR
-========================= -->
-
-<section
-    id="salary"
-    class="tool-section"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            Salary Calculator
-        </h2>
-
-    </div>
-
-
-    <div class="form-grid">
-
-        <div>
-
-            <label for="basicSalary">
-                Basic Salary
+            <label for="country">
+                Select Country
             </label>
 
-            <input
-                type="number"
-                id="basicSalary"
-                placeholder="Enter basic salary"
-                min="0"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="allowances">
-                Allowances
-            </label>
-
-            <input
-                type="number"
-                id="allowances"
-                placeholder="Enter allowances"
-                min="0"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="deductions">
-                Deductions
-            </label>
-
-            <input
-                type="number"
-                id="deductions"
-                placeholder="Enter deductions"
-                min="0"
-            >
-
-        </div>
-
-    </div>
-
-
-    <div class="result-box">
-
-        <strong>
-            Net Salary:
-        </strong>
-
-        <span id="netSalary">
-            0.00
-        </span>
-
-        <span class="currency-code">
-            QAR
-        </span>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     INVOICE
-========================= -->
-
-<section
-    id="invoice"
-    class="tool-section"
->
-
-    <div class="tool-header">
-
-        <button
-            type="button"
-            class="back-button"
-            onclick="goHome()"
-        >
-            ← Back
-        </button>
-
-        <h2>
-            Invoice Generator
-        </h2>
-
-    </div>
-
-
-    <div class="invoice-top-actions">
-
-        <button
-            type="button"
-            class="new-invoice-button"
-            onclick="newInvoice()"
-        >
-            + New Invoice
-        </button>
-
-    </div>
-
-
-    <h3>
-        Company Information
-    </h3>
-
-
-    <div class="invoice-info-grid">
-
-        <div>
-
-            <label for="companyName">
-                Company Name
-            </label>
-
-            <input
-                type="text"
-                id="companyName"
-                placeholder="Company name"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="companyVat">
-                Company VAT Number
-            </label>
-
-            <input
-                type="text"
-                id="companyVat"
-                placeholder="VAT number"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="companyPhone">
-                Phone
-            </label>
-
-            <input
-                type="text"
-                id="companyPhone"
-                placeholder="Phone number"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="companyEmail">
-                Email
-            </label>
-
-            <input
-                type="email"
-                id="companyEmail"
-                placeholder="Email address"
-            >
-
-        </div>
-
-    </div>
-
-
-    <div>
-
-        <label for="companyAddress">
-            Company Address
-        </label>
-
-        <textarea
-            id="companyAddress"
-            rows="3"
-            placeholder="Company address"
-        ></textarea>
-
-    </div>
-
-
-    <div class="logo-section">
-
-        <label for="companyLogo">
-            Company Logo
-        </label>
-
-        <input
-            type="file"
-            id="companyLogo"
-            accept="image/*"
-        >
-
-        <div
-            id="logoPreview"
-            class="logo-preview"
-        >
-            No logo selected
-        </div>
-
-    </div>
-
-
-    <h3>
-        Invoice Information
-    </h3>
-
-
-    <div class="invoice-info-grid">
-
-        <div>
-
-            <label for="invoiceNumber">
-                Invoice Number
-            </label>
-
-            <input
-                type="text"
-                id="invoiceNumber"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="invoiceDate">
-                Invoice Date
-            </label>
-
-            <input
-                type="date"
-                id="invoiceDate"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="invoiceStatus">
-                Status
-            </label>
-
-            <select id="invoiceStatus">
-
-                <option value="Unpaid">
-                    Unpaid
+            <select id="country">
+                <option value="Qatar">Qatar</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="United Arab Emirates">
+                    United Arab Emirates
                 </option>
-
-                <option value="Paid">
-                    Paid
-                </option>
-
-                <option value="Partially Paid">
-                    Partially Paid
-                </option>
-
+                <option value="Kuwait">Kuwait</option>
+                <option value="Oman">Oman</option>
+                <option value="Bahrain">Bahrain</option>
             </select>
 
         </div>
-
-    </div>
-
-
-    <h3>
-        Customer Information
-    </h3>
+    </section>
 
 
-    <div class="invoice-info-grid">
+    <!-- HOME -->
 
-        <div>
+    <section id="home" class="container">
 
-            <label for="customerName">
-                Customer Name
-            </label>
+        <div class="dashboard">
 
-            <input
-                type="text"
-                id="customerName"
+            <!-- SALARY -->
+
+            <div
+                class="tool-card"
+                onclick="showTool('salary')"
             >
+
+                <div class="tool-icon">
+                    💰
+                </div>
+
+                <h2>
+                    Salary Calculator
+                </h2>
+
+                <p>
+                    Calculate your net salary after allowances
+                    and deductions for GCC countries.
+                </p>
+
+            </div>
+
+
+            <!-- INVOICE -->
+
+            <div
+                class="tool-card"
+                onclick="showTool('invoice')"
+            >
+
+                <div class="tool-icon">
+                    🧾
+                </div>
+
+                <h2>
+                    Invoice Generator
+                </h2>
+
+                <p>
+                    Create professional invoices for businesses
+                    across the GCC and download them as PDF.
+                </p>
+
+            </div>
+
+
+            <!-- VAT -->
+
+            <div
+                class="tool-card"
+                onclick="showTool('vat')"
+            >
+
+                <div class="tool-icon">
+                    📊
+                </div>
+
+                <h2>
+                    VAT Calculator
+                </h2>
+
+                <p>
+                    Calculate VAT and total amounts based on
+                    the selected GCC country.
+                </p>
+
+            </div>
+
+
+            <!-- GRATUITY -->
+
+            <div
+                class="tool-card"
+                onclick="showTool('gratuity')"
+            >
+
+                <div class="tool-icon">
+                    🎁
+                </div>
+
+                <h2>
+                    Gratuity / End-of-Service Calculator
+                </h2>
+
+                <p>
+                    Estimate end-of-service gratuity based on
+                    salary and service period.
+                </p>
+
+            </div>
 
         </div>
 
 
-        <div>
+        <!-- SEO CONTENT -->
 
-            <label for="customerVat">
-                Customer VAT Number
-            </label>
+        <section
+            class="content-page"
+            style="display: block; background: white; margin: 30px 0; padding: 30px; border-radius: 12px; border: 1px solid #e5e7eb;"
+        >
 
-            <input
-                type="text"
-                id="customerVat"
-            >
+            <h2>
+                Free GCC Finance Calculators
+            </h2>
 
-        </div>
-
-    </div>
-
-
-    <h3>
-        Invoice Items
-    </h3>
+            <p>
+                GCC Finance Tools provides simple online finance
+                and business calculators for individuals,
+                employees and businesses across the Gulf
+                Cooperation Council (GCC).
+            </p>
 
 
-    <div class="invoice-items-wrapper">
+            <h2>
+                Finance Tools for Qatar
+            </h2>
 
-        <table class="invoice-items-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>
-                        Description
-                    </th>
-
-                    <th>
-                        Quantity
-                    </th>
-
-                    <th>
-                        Unit Price
-                    </th>
-
-                    <th>
-                        Total
-                    </th>
-
-                    <th>
-                        Action
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="invoiceItems">
-            </tbody>
-
-        </table>
-
-    </div>
+            <p>
+                Use our Qatar salary calculator, Qatar VAT
+                calculator, Qatar invoice generator and Qatar
+                gratuity or end-of-service calculator for
+                common financial calculations.
+            </p>
 
 
-    <button
-        type="button"
-        class="secondary-button"
-        onclick="addInvoiceItem()"
+            <h2>
+                Finance Tools for Saudi Arabia
+            </h2>
+
+            <p>
+                Use our Saudi Arabia salary calculator, Saudi
+                VAT calculator, Saudi invoice generator and
+                Saudi gratuity or end-of-service calculator.
+            </p>
+
+
+            <h2>
+                Finance Tools for the United Arab Emirates
+            </h2>
+
+            <p>
+                Use our UAE salary calculator, UAE VAT
+                calculator, UAE invoice generator and UAE
+                gratuity or end-of-service calculator.
+            </p>
+
+
+            <h2>
+                Finance Tools for Kuwait
+            </h2>
+
+            <p>
+                Use our Kuwait salary calculator, Kuwait VAT
+                calculator, Kuwait invoice generator and
+                Kuwait gratuity or end-of-service calculator.
+            </p>
+
+
+            <h2>
+                Finance Tools for Oman
+            </h2>
+
+            <p>
+                Use our Oman salary calculator, Oman VAT
+                calculator, Oman invoice generator and Oman
+                gratuity or end-of-service calculator.
+            </p>
+
+
+            <h2>
+                Finance Tools for Bahrain
+            </h2>
+
+            <p>
+                Use our Bahrain salary calculator, Bahrain VAT
+                calculator, Bahrain invoice generator and
+                Bahrain gratuity or end-of-service calculator.
+            </p>
+
+
+            <h2>
+                GCC Salary, VAT, Invoice and Gratuity Tools
+            </h2>
+
+            <p>
+                Our finance tools cover common salary, VAT,
+                invoicing and end-of-service calculations for
+                Qatar, Saudi Arabia, the United Arab Emirates,
+                Kuwait, Oman and Bahrain.
+            </p>
+
+        </section>
+
+    </section>
+
+
+    <!-- SALARY CALCULATOR -->
+
+    <section
+        id="salary"
+        class="tool-section"
     >
-        + Add Item
-    </button>
 
+        <div class="tool-header">
 
-    <div class="invoice-options">
-
-        <div>
-
-            <label for="invoiceDiscount">
-                Discount
-            </label>
-
-            <input
-                type="number"
-                id="invoiceDiscount"
-                value="0"
-                min="0"
-                step="0.01"
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
             >
+                ← Back
+            </button>
+
+            <h2>
+                Salary Calculator
+            </h2>
 
         </div>
 
+        <div class="form-grid">
 
-        <div>
+            <div>
+                <label for="basicSalary">
+                    Basic Salary
+                </label>
 
-            <label for="invoiceVat">
-                VAT %
-            </label>
-
-            <input
-                type="number"
-                id="invoiceVat"
-                value="0"
-                min="0"
-                step="0.01"
-            >
-
-        </div>
-
-    </div>
+                <input
+                    type="number"
+                    id="basicSalary"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
 
 
-    <h3>
-        Payment Details
-    </h3>
+            <div>
+                <label for="housingAllowance">
+                    Housing Allowance
+                </label>
+
+                <input
+                    type="number"
+                    id="housingAllowance"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
 
 
-    <div class="invoice-extra-grid">
+            <div>
+                <label for="transportAllowance">
+                    Transport Allowance
+                </label>
 
-        <div>
-
-            <label for="bankName">
-                Bank Name
-            </label>
-
-            <input
-                type="text"
-                id="bankName"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="accountName">
-                Account Name
-            </label>
-
-            <input
-                type="text"
-                id="accountName"
-            >
-
-        </div>
+                <input
+                    type="number"
+                    id="transportAllowance"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
 
 
-        <div>
+            <div>
+                <label for="otherAllowance">
+                    Other Allowances
+                </label>
 
-            <label for="accountNumber">
-                Account Number
-            </label>
-
-            <input
-                type="text"
-                id="accountNumber"
-            >
-
-        </div>
+                <input
+                    type="number"
+                    id="otherAllowance"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
 
 
-        <div>
+            <div>
+                <label for="deductions">
+                    Deductions
+                </label>
 
-            <label for="iban">
-                IBAN
-            </label>
-
-            <input
-                type="text"
-                id="iban"
-            >
+                <input
+                    type="number"
+                    id="deductions"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+            </div>
 
         </div>
-
-
-        <div>
-
-            <label for="paymentTerms">
-                Payment Terms
-            </label>
-
-            <input
-                type="text"
-                id="paymentTerms"
-                placeholder="e.g. Payment within 30 days"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label for="invoiceNotes">
-                Notes
-            </label>
-
-            <textarea
-                id="invoiceNotes"
-                rows="3"
-            ></textarea>
-
-        </div>
-
-    </div>
-
-
-    <div class="invoice-total-box">
-
-        <div>
-
-            <span>
-                Subtotal
-            </span>
-
-            <span>
-
-                <span id="invoiceSubtotal">
-                    0.00
-                </span>
-
-                <span class="currency-code">
-                    QAR
-                </span>
-
-            </span>
-
-        </div>
-
-
-        <div>
-
-            <span>
-                Discount
-            </span>
-
-            <span>
-
-                <span id="invoiceDiscountAmount">
-                    0.00
-                </span>
-
-                <span class="currency-code">
-                    QAR
-                </span>
-
-            </span>
-
-        </div>
-
-
-        <div>
-
-            <span>
-                VAT
-            </span>
-
-            <span>
-
-                <span id="invoiceVatAmount">
-                    0.00
-                </span>
-
-                <span class="currency-code">
-                    QAR
-                </span>
-
-            </span>
-
-        </div>
-
-
-        <div class="grand-total">
-
-            <strong>
-                Total
-            </strong>
-
-            <strong>
-
-                <span id="invoiceTotal">
-                    0.00
-                </span>
-
-                <span class="currency-code">
-                    QAR
-                </span>
-
-            </strong>
-
-        </div>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="pdf-button"
-        onclick="downloadInvoicePDF()"
-    >
-        Download Invoice PDF
-    </button>
-
-</section>
-
-
-<!-- =========================
-     VAT CALCULATOR
-========================= -->
-
-<section
-    id="vat"
-    class="tool-section"
->
-
-    <div class="tool-header">
 
         <button
             type="button"
-            class="back-button"
-            onclick="goHome()"
+            class="primary-button"
+            onclick="calculateSalary()"
         >
-            ← Back
+            Calculate Salary
         </button>
 
-        <h2>
-            VAT Calculator
-        </h2>
+        <div
+            id="salaryResult"
+            class="result-box"
+        ></div>
 
-    </div>
+    </section>
 
 
-    <div class="form-grid">
+    <!-- INVOICE GENERATOR -->
 
-        <div>
+    <section
+        id="invoice"
+        class="tool-section"
+    >
 
-            <label for="vatAmount">
-                Amount
-            </label>
+        <div class="tool-header">
 
-            <input
-                type="number"
-                id="vatAmount"
-                placeholder="Enter amount"
-                min="0"
-                step="0.01"
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
             >
+                ← Back
+            </button>
+
+            <h2>
+                Invoice Generator
+            </h2>
 
         </div>
 
 
-        <div>
+        <div class="invoice-top-actions">
 
-            <label for="vatRate">
-                VAT Rate (%)
-            </label>
-
-            <input
-                type="number"
-                id="vatRate"
-                value="0"
-                min="0"
-                step="0.01"
+            <button
+                type="button"
+                class="new-invoice-button"
+                onclick="newInvoice()"
             >
+                + New Invoice
+            </button>
 
         </div>
 
-    </div>
+
+        <div class="invoice-info-grid">
+
+            <div>
+
+                <label for="companyName">
+                    Company Name
+                </label>
+
+                <input
+                    type="text"
+                    id="companyName"
+                    placeholder="Company Name"
+                >
+
+            </div>
 
 
-    <div class="result-box">
+            <div>
 
-        <p>
+                <label for="invoiceNumber">
+                    Invoice Number
+                </label>
 
-            <strong>
-                VAT Amount:
-            </strong>
+                <input
+                    type="text"
+                    id="invoiceNumber"
+                    placeholder="Invoice Number"
+                >
 
-            <span id="vatAmountResult">
-                0.00
-            </span>
-
-            <span class="currency-code">
-                QAR
-            </span>
-
-        </p>
+            </div>
 
 
-        <p>
+            <div>
 
-            <strong>
-                Total Including VAT:
-            </strong>
+                <label for="invoiceDate">
+                    Invoice Date
+                </label>
 
-            <span id="vatTotalResult">
-                0.00
-            </span>
+                <input
+                    type="date"
+                    id="invoiceDate"
+                >
 
-            <span class="currency-code">
-                QAR
-            </span>
-
-        </p>
-
-    </div>
-
-</section>
+            </div>
 
 
-<!-- =========================
-     GRATUITY
-========================= -->
+            <div>
 
-<section
-    id="gratuity"
-    class="tool-section"
->
+                <label for="dueDate">
+                    Due Date
+                </label>
 
-    <div class="tool-header">
+                <input
+                    type="date"
+                    id="dueDate"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="customerName">
+                    Customer Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Customer Name"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="customerAddress">
+                    Customer Address
+                </label>
+
+                <textarea
+                    id="customerAddress"
+                    rows="3"
+                    placeholder="Customer Address"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGO -->
+
+        <div class="logo-section">
+
+            <h3>
+                Company Logo
+            </h3>
+
+            <input
+                type="file"
+                id="companyLogo"
+                accept="image/*"
+                onchange="previewLogo(event)"
+            >
+
+            <div
+                id="logoPreview"
+                class="logo-preview"
+            >
+                Logo Preview
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+
+        <h3>
+            Invoice Items
+        </h3>
+
+        <div class="invoice-items-wrapper">
+
+            <table class="invoice-items-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Unit Price
+                            (<span class="currency-code">QAR</span>)
+                        </th>
+
+                        <th>
+                            Amount
+                            (<span class="currency-code">QAR</span>)
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="invoiceItems">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
 
         <button
             type="button"
-            class="back-button"
-            onclick="goHome()"
+            class="secondary-button"
+            onclick="addInvoiceItem()"
         >
-            ← Back
+            + Add Item
         </button>
 
-        <h2>
-            Gratuity / End-of-Service Calculator
-        </h2>
 
-    </div>
+        <!-- INVOICE OPTIONS -->
 
+        <div class="invoice-options">
 
-    <div class="form-grid">
+            <div>
 
-        <div>
+                <label for="invoiceDiscount">
+                    Discount
+                </label>
 
-            <label for="gratuityBasicSalary">
-                Basic Salary
-            </label>
+                <input
+                    type="number"
+                    id="invoiceDiscount"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
 
-            <input
-                type="number"
-                id="gratuityBasicSalary"
-                placeholder="Enter basic salary"
-                min="0"
-                step="0.01"
-            >
-
-        </div>
+            </div>
 
 
-        <div>
+            <div>
 
-            <label for="gratuityYears">
-                Years of Service
-            </label>
+                <label for="invoiceVat">
+                    VAT (%)
+                </label>
 
-            <input
-                type="number"
-                id="gratuityYears"
-                placeholder="Enter years"
-                min="0"
-                step="0.01"
-            >
+                <input
+                    type="number"
+                    id="invoiceVat"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+
+            </div>
 
         </div>
 
 
-        <div>
+        <!-- PAYMENT DETAILS -->
 
-            <label for="gratuityDays">
-                Gratuity Days per Year
-            </label>
+        <div class="invoice-extra-grid">
 
-            <input
-                type="number"
-                id="gratuityDays"
-                value="21"
-                min="0"
-                step="1"
-            >
+            <div>
+
+                <label for="paymentDetails">
+                    Payment Details
+                </label>
+
+                <textarea
+                    id="paymentDetails"
+                    rows="5"
+                    placeholder="Bank details, payment instructions, etc."
+                ></textarea>
+
+            </div>
+
+
+            <div>
+
+                <label for="invoiceNotes">
+                    Notes
+                </label>
+
+                <textarea
+                    id="invoiceNotes"
+                    rows="5"
+                    placeholder="Additional notes"
+                ></textarea>
+
+            </div>
 
         </div>
 
-    </div>
+
+        <!-- TOTALS -->
+
+        <div class="invoice-total-box">
+
+            <div>
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong>
+                    <span id="invoiceSubtotal">0.00</span>
+                    <span class="currency-code">QAR</span>
+                </strong>
+
+            </div>
 
 
-    <div class="result-box">
+            <div>
 
-        <strong>
-            Estimated Gratuity:
-        </strong>
+                <span>
+                    Discount
+                </span>
 
-        <span id="gratuityResult">
-            0.00
-        </span>
+                <strong>
+                    <span id="invoiceDiscountTotal">0.00</span>
+                    <span class="currency-code">QAR</span>
+                </strong>
 
-        <span class="currency-code">
-            QAR
-        </span>
+            </div>
 
-    </div>
 
-</section>
+            <div>
+
+                <span>
+                    VAT
+                </span>
+
+                <strong>
+                    <span id="invoiceVatTotal">0.00</span>
+                    <span class="currency-code">QAR</span>
+                </strong>
+
+            </div>
+
+
+            <div class="grand-total">
+
+                <span>
+                    Grand Total
+                </span>
+
+                <strong>
+                    <span id="invoiceGrandTotal">0.00</span>
+                    <span class="currency-code">QAR</span>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="pdf-button"
+            onclick="downloadInvoicePDF()"
+        >
+            Download Invoice PDF
+        </button>
+
+    </section>
+
+
+    <!-- VAT CALCULATOR -->
+
+    <section
+        id="vat"
+        class="tool-section"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                VAT Calculator
+            </h2>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div>
+
+                <label for="vatAmount">
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="vatAmount"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="vatRate">
+                    VAT Rate (%)
+                </label>
+
+                <input
+                    type="number"
+                    id="vatRate"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="primary-button"
+            onclick="calculateVAT()"
+        >
+            Calculate VAT
+        </button>
+
+
+        <div
+            id="vatResult"
+            class="result-box"
+        ></div>
+
+    </section>
+
+
+    <!-- GRATUITY CALCULATOR -->
+
+    <section
+        id="gratuity"
+        class="tool-section"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                Gratuity / End-of-Service Calculator
+            </h2>
+
+        </div>
+
+
+        <div class="form-grid">
+
+            <div>
+
+                <label for="gratuitySalary">
+                    Basic Salary
+                </label>
+
+                <input
+                    type="number"
+                    id="gratuitySalary"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="gratuityYears">
+                    Years of Service
+                </label>
+
+                <input
+                    type="number"
+                    id="gratuityYears"
+                    value="0"
+                    min="0"
+                    step="0.01"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="gratuityMonths">
+                    Additional Months
+                </label>
+
+                <input
+                    type="number"
+                    id="gratuityMonths"
+                    value="0"
+                    min="0"
+                    max="11"
+                    step="1"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="primary-button"
+            onclick="calculateGratuity()"
+        >
+            Calculate Gratuity
+        </button>
+
+
+        <div
+            id="gratuityResult"
+            class="result-box"
+        ></div>
+
+    </section>
+
+
+    <!-- ABOUT US -->
+
+    <section
+        id="about"
+        class="tool-section content-page"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                About Us
+            </h2>
+
+        </div>
+
+        <p>
+            GCC Finance Tools provides simple online finance
+            and business tools designed for users across the
+            Gulf Cooperation Council.
+        </p>
+
+        <p>
+            Our tools support users in Qatar, Saudi Arabia,
+            the United Arab Emirates, Kuwait, Oman and Bahrain.
+        </p>
+
+        <p>
+            The website provides practical calculators for
+            salary, VAT, invoicing and end-of-service
+            calculations.
+        </p>
+
+    </section>
+
+
+    <!-- NOTES & GUIDES -->
+
+    <section
+        id="notes"
+        class="tool-section content-page"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                Notes & Guides
+            </h2>
+
+        </div>
+
+        <h3>
+            GCC Countries Covered
+        </h3>
+
+        <p>
+            GCC Finance Tools covers Qatar, Saudi Arabia,
+            the United Arab Emirates, Kuwait, Oman and Bahrain.
+        </p>
+
+        <h3>
+            Salary Calculations
+        </h3>
+
+        <p>
+            Salary calculations can help users estimate net
+            salary after adding allowances and deducting
+            applicable amounts.
+        </p>
+
+        <h3>
+            VAT Calculations
+        </h3>
+
+        <p>
+            VAT calculations are based on the selected country
+            and the VAT rate entered or automatically displayed
+            by the tool.
+        </p>
+
+        <h3>
+            Invoicing
+        </h3>
+
+        <p>
+            The invoice generator allows users to prepare
+            business invoices and download them as PDF files.
+        </p>
+
+        <h3>
+            End-of-Service Calculations
+        </h3>
+
+        <p>
+            The gratuity calculator provides an estimate based
+            on salary and the service period entered by the user.
+        </p>
+
+    </section>
+
+
+    <!-- CAREERS -->
+
+    <section
+        id="careers"
+        class="tool-section content-page"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                Careers
+            </h2>
+
+        </div>
+
+        <p>
+            We are working on opportunities to grow GCC Finance
+            Tools and develop additional finance and business
+            resources for GCC users.
+        </p>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section
+        id="contact"
+        class="tool-section content-page"
+    >
+
+        <div class="tool-header">
+
+            <button
+                type="button"
+                class="back-button"
+                onclick="goHome()"
+            >
+                ← Back
+            </button>
+
+            <h2>
+                Contact Us
+            </h2>
+
+        </div>
+
+        <p>
+            For general enquiries regarding GCC Finance Tools,
+            please use the contact information provided by the
+            website owner.
+        </p>
+
+    </section>
 
 </main>
 
-
-<!-- =========================
-     FOOTER
-========================= -->
 
 <footer class="footer">
 
