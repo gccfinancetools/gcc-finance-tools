@@ -1,17 +1,7 @@
-/* =========================================================
-   GCC FINANCE TOOLS
-   Final Script
-========================================================= */
-
-
-/* =========================================================
-   GCC SETTINGS
-========================================================= */
-
 const currencies = {
     Qatar: "QAR",
-    SaudiArabia: "SAR",
-    UAE: "AED",
+    "Saudi Arabia": "SAR",
+    "United Arab Emirates": "AED",
     Kuwait: "KWD",
     Oman: "OMR",
     Bahrain: "BHD"
@@ -19,8 +9,8 @@ const currencies = {
 
 const vatRates = {
     Qatar: 0,
-    SaudiArabia: 15,
-    UAE: 5,
+    "Saudi Arabia": 15,
+    "United Arab Emirates": 5,
     Kuwait: 0,
     Oman: 5,
     Bahrain: 10
@@ -29,52 +19,81 @@ const vatRates = {
 let companyLogoData = "";
 
 
-/* =========================================================
+/* =========================
    COUNTRY
-========================================================= */
+========================= */
 
 function updateCountry() {
-    const countrySelect = document.getElementById("country");
+    const countryElement = document.getElementById("country");
 
-    if (!countrySelect) return;
+    if (!countryElement) return;
 
-    const country = countrySelect.value;
-
-    const currency = currencies[country] || "QAR";
+    const country = countryElement.value;
+    const currency = currencies[country] || "";
     const vatRate = vatRates[country] ?? 0;
 
-    const currencyElements = document.querySelectorAll(".currency");
+    /* Update currency */
 
-    currencyElements.forEach(element => {
+    const currencyElements =
+        document.querySelectorAll(".currency-code");
+
+    currencyElements.forEach(function (element) {
         element.textContent = currency;
     });
 
-    const invoiceVat = document.getElementById("invoiceVat");
+
+    /* Update Invoice VAT */
+
+    const invoiceVat =
+        document.getElementById("invoiceVat");
 
     if (invoiceVat) {
         invoiceVat.value = vatRate;
     }
 
+
+    /* Update VAT Calculator VAT Rate */
+
+    const vatRateElement =
+        document.getElementById("vatRate");
+
+    if (vatRateElement) {
+        vatRateElement.value = vatRate;
+    }
+
+
+    /* Recalculate */
+
+    calculateSalary();
     calculateInvoice();
+    calculateVAT();
+    calculateGratuity();
+}
 
-    const invoiceNumber = document.getElementById("invoiceNumber");
 
-    if (invoiceNumber && !invoiceNumber.value) {
-        setNewInvoiceNumber();
+/* =========================
+   MENU / NAVIGATION
+========================= */
+
+function hideTools() {
+    const sections =
+        document.querySelectorAll(".tool-section");
+
+    sections.forEach(function (section) {
+        section.style.display = "none";
+    });
+
+    const dashboard =
+        document.getElementById("dashboard");
+
+    if (dashboard) {
+        dashboard.style.display = "grid";
     }
 }
 
 
-/* =========================================================
-   TOOL NAVIGATION
-========================================================= */
-
-function hideTools() {
-    const sections = document.querySelectorAll(".tool-section");
-
-    sections.forEach(section => {
-        section.style.display = "none";
-    });
+function goHome() {
+    hideTools();
 
     window.scrollTo({
         top: 0,
@@ -82,80 +101,121 @@ function hideTools() {
     });
 }
 
+
 function showTool(toolId) {
-    hideTools();
+    const sections =
+        document.querySelectorAll(".tool-section");
 
-    const section = document.getElementById(toolId);
+    sections.forEach(function (section) {
+        section.style.display = "none";
+    });
 
-    if (!section) return;
+    const dashboard =
+        document.getElementById("dashboard");
 
-    section.style.display = "block";
+    if (dashboard) {
+        dashboard.style.display = "none";
+    }
 
-    setTimeout(() => {
-        section.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+    const tool =
+        document.getElementById(toolId);
+
+    if (tool) {
+        tool.style.display = "block";
+
+        window.scrollTo({
+            top: tool.offsetTop - 20,
+            behavior: "smooth"
         });
-    }, 50);
+    }
 }
 
 
-/* =========================================================
+function showPage(pageId) {
+    const sections =
+        document.querySelectorAll(".tool-section");
+
+    sections.forEach(function (section) {
+        section.style.display = "none";
+    });
+
+    const dashboard =
+        document.getElementById("dashboard");
+
+    if (dashboard) {
+        dashboard.style.display = "none";
+    }
+
+    const page =
+        document.getElementById(pageId);
+
+    if (page) {
+        page.style.display = "block";
+
+        window.scrollTo({
+            top: page.offsetTop - 20,
+            behavior: "smooth"
+        });
+    }
+}
+
+
+/* =========================
    NUMBER FORMATTING
-========================================================= */
+========================= */
 
 function formatNumberInput(input) {
     if (!input) return;
 
-    let value = input.value;
-
-    value = value.replace(/,/g, "");
+    let value =
+        input.value.replace(/,/g, "");
 
     if (value === "") return;
 
     const number = Number(value);
 
-    if (isNaN(number)) {
-        input.value = "";
-        return;
+    if (!isNaN(number)) {
+        input.value =
+            number.toLocaleString("en-US");
     }
-
-    input.value = number.toLocaleString("en-US", {
-        maximumFractionDigits: 2
-    });
 }
+
 
 function getNumberValue(id) {
-    const element = document.getElementById(id);
+    const element =
+        document.getElementById(id);
 
     if (!element) return 0;
 
-    const value = element.value
-        .toString()
-        .replace(/,/g, "")
-        .trim();
+    const value =
+        element.value
+            .replace(/,/g, "")
+            .replace(/[^\d.-]/g, "");
 
-    const number = parseFloat(value);
+    const number =
+        parseFloat(value);
 
     return isNaN(number) ? 0 : number;
 }
 
-function getNumberFromText(id) {
-    const element = document.getElementById(id);
 
-    if (!element) return 0;
+function getNumberFromText(text) {
+    if (!text) return 0;
 
-    const value = element.textContent
-        .replace(/[^\d.-]/g, "")
-        .trim();
-
-    const number = parseFloat(value);
+    const number =
+        parseFloat(
+            String(text)
+                .replace(/,/g, "")
+                .replace(/[^\d.-]/g, "")
+        );
 
     return isNaN(number) ? 0 : number;
 }
+
 
 function formatAmount(amount) {
-    const number = Number(amount) || 0;
+    const number =
+        Number(amount) || 0;
 
     return number.toLocaleString("en-US", {
         minimumFractionDigits: 2,
@@ -164,180 +224,192 @@ function formatAmount(amount) {
 }
 
 
-/* =========================================================
+/* =========================
    SALARY CALCULATOR
-========================================================= */
+========================= */
 
 function calculateSalary() {
-    const salary = getNumberValue("salary");
+    const basicSalary =
+        getNumberValue("basicSalary");
 
-    const result = document.getElementById("salaryResult");
+    const allowances =
+        getNumberValue("allowances");
 
-    if (!result) return;
+    const deductions =
+        getNumberValue("deductions");
 
-    if (salary <= 0) {
-        result.innerHTML = "Please enter a valid salary.";
-        return;
+    const netSalary =
+        basicSalary +
+        allowances -
+        deductions;
+
+    const result =
+        document.getElementById("netSalary");
+
+    if (result) {
+        result.textContent =
+            formatAmount(netSalary);
     }
-
-    const monthly = salary;
-    const annual = salary * 12;
-
-    result.innerHTML = `
-        <strong>Monthly Salary:</strong> ${formatAmount(monthly)}<br>
-        <strong>Annual Salary:</strong> ${formatAmount(annual)}
-    `;
 }
 
 
-/* =========================================================
+/* =========================
    INVOICE NUMBER
-========================================================= */
+========================= */
 
 function generateInvoiceNumber() {
-    const year = new Date().getFullYear();
+    const year =
+        new Date().getFullYear();
 
-    const storageKey = "gccInvoiceCounter";
-
-    let counter = parseInt(
-        localStorage.getItem(storageKey) || "0",
-        10
-    );
+    let counter =
+        parseInt(
+            localStorage.getItem(
+                "gccInvoiceCounter"
+            ) || "0",
+            10
+        );
 
     counter++;
 
     localStorage.setItem(
-        storageKey,
-        counter.toString()
+        "gccInvoiceCounter",
+        String(counter)
     );
 
-    return `INV-${year}-${String(counter).padStart(3, "0")}`;
+    return (
+        "INV-" +
+        year +
+        "-" +
+        String(counter).padStart(3, "0")
+    );
 }
+
 
 function setNewInvoiceNumber() {
-    const invoiceNumber = document.getElementById("invoiceNumber");
+    const invoiceNumber =
+        document.getElementById(
+            "invoiceNumber"
+        );
 
-    if (!invoiceNumber) return;
-
-    invoiceNumber.value = generateInvoiceNumber();
+    if (invoiceNumber) {
+        invoiceNumber.value =
+            generateInvoiceNumber();
+    }
 }
 
 
-/* =========================================================
+/* =========================
    NEW INVOICE
-========================================================= */
+========================= */
 
 function newInvoice() {
-    const companyName = document.getElementById("companyName")?.value || "";
-    const companyAddress = document.getElementById("companyAddress")?.value || "";
-    const companyVat = document.getElementById("companyVat")?.value || "";
-    const companyPhone = document.getElementById("companyPhone")?.value || "";
-    const companyEmail = document.getElementById("companyEmail")?.value || "";
 
-    const logo = companyLogoData;
+    const fieldsToClear = [
+        "customerName",
+        "customerVat",
+        "bankName",
+        "accountName",
+        "accountNumber",
+        "iban",
+        "paymentTerms",
+        "invoiceNotes"
+    ];
 
-    const customerName = document.getElementById("customerName");
-    const customerVat = document.getElementById("customerVat");
+    fieldsToClear.forEach(function (id) {
 
-    const bankName = document.getElementById("bankName");
-    const accountName = document.getElementById("accountName");
-    const accountNumber = document.getElementById("accountNumber");
-    const iban = document.getElementById("iban");
+        const element =
+            document.getElementById(id);
 
-    const paymentTerms = document.getElementById("paymentTerms");
-    const invoiceNotes = document.getElementById("invoiceNotes");
+        if (element) {
+            element.value = "";
+        }
+    });
 
-    if (customerName) customerName.value = "";
-    if (customerVat) customerVat.value = "";
 
-    if (bankName) bankName.value = "";
-    if (accountName) accountName.value = "";
-    if (accountNumber) accountNumber.value = "";
-    if (iban) iban.value = "";
-
-    if (paymentTerms) paymentTerms.value = "";
-    if (invoiceNotes) invoiceNotes.value = "";
-
-    const invoiceDate = document.getElementById("invoiceDate");
+    const invoiceDate =
+        document.getElementById(
+            "invoiceDate"
+        );
 
     if (invoiceDate) {
-        invoiceDate.value = new Date().toISOString().split("T")[0];
+        invoiceDate.value =
+            new Date()
+                .toISOString()
+                .split("T")[0];
     }
 
-    const invoiceStatus = document.getElementById("invoiceStatus");
+
+    const invoiceStatus =
+        document.getElementById(
+            "invoiceStatus"
+        );
 
     if (invoiceStatus) {
         invoiceStatus.value = "Unpaid";
     }
 
-    const discount = document.getElementById("invoiceDiscount");
 
-    if (discount) {
-        discount.value = "0";
+    const invoiceDiscount =
+        document.getElementById(
+            "invoiceDiscount"
+        );
+
+    if (invoiceDiscount) {
+        invoiceDiscount.value = "0";
     }
 
-    const invoiceVat = document.getElementById("invoiceVat");
 
-    const country = document.getElementById("country")?.value || "Qatar";
+    const country =
+        document.getElementById("country");
+
+    const invoiceVat =
+        document.getElementById(
+            "invoiceVat"
+        );
 
     if (invoiceVat) {
-        invoiceVat.value = vatRates[country] ?? 0;
+        invoiceVat.value =
+            country
+                ? vatRates[country.value] ?? 0
+                : 0;
     }
 
-    const items = document.getElementById("invoiceItems");
-
-    if (items) {
-        items.innerHTML = "";
-    }
-
-    addInvoiceItem();
 
     setNewInvoiceNumber();
 
-    /*
-       Restore company information.
-       This is intentionally kept when creating a new invoice.
-    */
-    const companyFields = {
-        companyName,
-        companyAddress,
-        companyVat,
-        companyPhone,
-        companyEmail
-    };
 
-    Object.keys(companyFields).forEach(id => {
-        const element = document.getElementById(id);
+    const invoiceItems =
+        document.getElementById(
+            "invoiceItems"
+        );
 
-        if (!element) return;
+    if (invoiceItems) {
 
-        element.value = eval(id) || "";
-    });
+        invoiceItems.innerHTML = "";
 
-    companyLogoData = logo;
-
-    if (logo) {
-        const preview = document.getElementById("logoPreview");
-
-        if (preview) {
-            preview.innerHTML = `<img src="${logo}" alt="Company Logo">`;
-        }
+        addInvoiceItem();
     }
+
 
     calculateInvoice();
 }
 
 
-/* =========================================================
+/* =========================
    INVOICE ITEMS
-========================================================= */
+========================= */
 
 function addInvoiceItem() {
-    const table = document.getElementById("invoiceItems");
 
-    if (!table) return;
+    const container =
+        document.getElementById(
+            "invoiceItems"
+        );
 
-    const row = document.createElement("tr");
+    if (!container) return;
+
+    const row =
+        document.createElement("tr");
 
     row.innerHTML = `
         <td>
@@ -354,266 +426,399 @@ function addInvoiceItem() {
                 class="item-quantity"
                 value="1"
                 min="0"
-                step="0.01"
-                oninput="calculateInvoice()"
             >
         </td>
 
         <td>
             <input
-                type="text"
+                type="number"
                 class="item-price"
                 value="0"
-                oninput="formatNumberInput(this); calculateInvoice()"
+                min="0"
+                step="0.01"
             >
         </td>
 
         <td>
-            <span class="item-total">0.00</span>
+            <span class="item-total">
+                0.00
+            </span>
         </td>
 
         <td>
             <button
                 type="button"
                 class="remove-item-button"
-                onclick="removeInvoiceItem(this)"
             >
                 Remove
             </button>
         </td>
     `;
 
-    table.appendChild(row);
+    container.appendChild(row);
+
+
+    const quantity =
+        row.querySelector(
+            ".item-quantity"
+        );
+
+    const price =
+        row.querySelector(
+            ".item-price"
+        );
+
+    const removeButton =
+        row.querySelector(
+            ".remove-item-button"
+        );
+
+
+    if (quantity) {
+        quantity.addEventListener(
+            "input",
+            calculateInvoice
+        );
+    }
+
+
+    if (price) {
+        price.addEventListener(
+            "input",
+            calculateInvoice
+        );
+    }
+
+
+    if (removeButton) {
+
+        removeButton.addEventListener(
+            "click",
+            function () {
+
+                row.remove();
+
+                calculateInvoice();
+            }
+        );
+    }
+
 
     calculateInvoice();
 }
 
+
 function removeInvoiceItem(button) {
+
     if (!button) return;
 
-    const row = button.closest("tr");
+    const row =
+        button.closest("tr");
 
     if (row) {
         row.remove();
     }
 
-    const table = document.getElementById("invoiceItems");
-
-    if (table && table.children.length === 0) {
-        addInvoiceItem();
-    }
-
     calculateInvoice();
 }
 
 
-/* =========================================================
+/* =========================
    INVOICE CALCULATION
-========================================================= */
+========================= */
 
 function calculateInvoice() {
-    const table = document.getElementById("invoiceItems");
 
-    if (!table) return;
+    const container =
+        document.getElementById(
+            "invoiceItems"
+        );
 
     let subtotal = 0;
 
-    const rows = table.querySelectorAll("tr");
 
-    rows.forEach(row => {
-        const quantityInput = row.querySelector(".item-quantity");
-        const priceInput = row.querySelector(".item-price");
-        const totalElement = row.querySelector(".item-total");
+    if (container) {
 
-        if (!quantityInput || !priceInput || !totalElement) return;
+        const rows =
+            container.querySelectorAll("tr");
 
-        const quantity = parseFloat(quantityInput.value) || 0;
+        rows.forEach(function (row) {
 
-        const price = parseFloat(
-            priceInput.value.replace(/,/g, "")
-        ) || 0;
+            const quantityElement =
+                row.querySelector(
+                    ".item-quantity"
+                );
 
-        const total = quantity * price;
+            const priceElement =
+                row.querySelector(
+                    ".item-price"
+                );
 
-        subtotal += total;
+            const totalElement =
+                row.querySelector(
+                    ".item-total"
+                );
 
-        totalElement.textContent = formatAmount(total);
-    });
 
-    const discount = getNumberValue("invoiceDiscount");
+            const quantity =
+                parseFloat(
+                    quantityElement?.value
+                ) || 0;
 
-    const discountAmount = Math.min(
-        Math.max(discount, 0),
-        subtotal
-    );
+            const price =
+                parseFloat(
+                    priceElement?.value
+                ) || 0;
 
-    const taxableAmount = Math.max(
-        subtotal - discountAmount,
-        0
-    );
 
-    const vatRate = getNumberValue("invoiceVat");
+            const total =
+                quantity * price;
 
-    const vatAmount = taxableAmount * (vatRate / 100);
+            subtotal += total;
 
-    const grandTotal = taxableAmount + vatAmount;
+
+            if (totalElement) {
+                totalElement.textContent =
+                    formatAmount(total);
+            }
+        });
+    }
+
+
+    const discount =
+        getNumberValue(
+            "invoiceDiscount"
+        );
+
+
+    const afterDiscount =
+        Math.max(
+            subtotal - discount,
+            0
+        );
+
+
+    const vatRate =
+        getNumberValue(
+            "invoiceVat"
+        );
+
+
+    const vatAmount =
+        afterDiscount *
+        vatRate /
+        100;
+
+
+    const grandTotal =
+        afterDiscount +
+        vatAmount;
+
 
     const subtotalElement =
-        document.getElementById("invoiceSubtotal");
+        document.getElementById(
+            "invoiceSubtotal"
+        );
 
     const discountElement =
-        document.getElementById("invoiceDiscountAmount");
+        document.getElementById(
+            "invoiceDiscountAmount"
+        );
 
     const vatElement =
-        document.getElementById("invoiceVatAmount");
+        document.getElementById(
+            "invoiceVatAmount"
+        );
 
     const totalElement =
-        document.getElementById("invoiceTotal");
+        document.getElementById(
+            "invoiceTotal"
+        );
+
 
     if (subtotalElement) {
-        subtotalElement.textContent = formatAmount(subtotal);
+        subtotalElement.textContent =
+            formatAmount(subtotal);
     }
+
 
     if (discountElement) {
-        discountElement.textContent = formatAmount(discountAmount);
+        discountElement.textContent =
+            formatAmount(discount);
     }
+
 
     if (vatElement) {
-        vatElement.textContent = formatAmount(vatAmount);
+        vatElement.textContent =
+            formatAmount(vatAmount);
     }
+
 
     if (totalElement) {
-        totalElement.textContent = formatAmount(grandTotal);
+        totalElement.textContent =
+            formatAmount(grandTotal);
     }
 }
 
 
-/* =========================================================
+/* =========================
    VAT CALCULATOR
-========================================================= */
+========================= */
 
 function calculateVAT() {
-    const amount = getNumberValue("vatAmount");
-    const rate = getNumberValue("vatRate");
 
-    const result = document.getElementById("vatResult");
+    const amount =
+        getNumberValue(
+            "vatAmount"
+        );
 
-    if (!result) return;
 
-    if (amount < 0 || rate < 0) {
-        result.innerHTML = "Please enter valid values.";
-        return;
+    const vatRateElement =
+        document.getElementById(
+            "vatRate"
+        );
+
+
+    const vatRate =
+        vatRateElement
+            ? parseFloat(
+                vatRateElement.value
+            ) || 0
+            : 0;
+
+
+    const vatAmount =
+        amount *
+        vatRate /
+        100;
+
+
+    const total =
+        amount +
+        vatAmount;
+
+
+    const vatResult =
+        document.getElementById(
+            "vatAmountResult"
+        );
+
+    const totalResult =
+        document.getElementById(
+            "vatTotalResult"
+        );
+
+
+    if (vatResult) {
+        vatResult.textContent =
+            formatAmount(vatAmount);
     }
 
-    const vat = amount * (rate / 100);
 
-    const total = amount + vat;
-
-    result.innerHTML = `
-        <strong>Amount:</strong> ${formatAmount(amount)}<br>
-        <strong>VAT (${formatAmount(rate)}%):</strong> ${formatAmount(vat)}<br>
-        <strong>Total Including VAT:</strong> ${formatAmount(total)}
-    `;
+    if (totalResult) {
+        totalResult.textContent =
+            formatAmount(total);
+    }
 }
 
 
-/* =========================================================
-   GRATUITY / END OF SERVICE
-========================================================= */
+/* =========================
+   GRATUITY CALCULATOR
+========================= */
 
 function calculateGratuity() {
-    const salary = getNumberValue("gratuitySalary");
-    const years = getNumberValue("gratuityYears");
 
-    const result = document.getElementById("gratuityResult");
+    const basicSalary =
+        getNumberValue(
+            "gratuityBasicSalary"
+        );
 
-    if (!result) return;
 
-    if (salary <= 0 || years <= 0) {
-        result.innerHTML =
-            "Please enter a valid salary and service period.";
+    const years =
+        getNumberValue(
+            "gratuityYears"
+        );
 
-        return;
+
+    const daysPerYear =
+        getNumberValue(
+            "gratuityDays"
+        ) || 21;
+
+
+    const gratuity =
+        (basicSalary / 30) *
+        daysPerYear *
+        years;
+
+
+    const result =
+        document.getElementById(
+            "gratuityResult"
+        );
+
+
+    if (result) {
+        result.textContent =
+            formatAmount(gratuity);
     }
-
-    /*
-       Basic GCC-style estimate:
-       First 5 years = 21 days of salary per year
-       After 5 years = 30 days of salary per year
-
-       This is a general estimate only.
-       Actual entitlement depends on the applicable
-       country's labour law and employment circumstances.
-    */
-
-    const firstFiveYears = Math.min(years, 5);
-
-    const remainingYears = Math.max(years - 5, 0);
-
-    const dailySalary = salary / 30;
-
-    const firstPeriod =
-        firstFiveYears * dailySalary * 21;
-
-    const secondPeriod =
-        remainingYears * dailySalary * 30;
-
-    const gratuity = firstPeriod + secondPeriod;
-
-    result.innerHTML = `
-        <strong>Daily Salary:</strong> ${formatAmount(dailySalary)}<br>
-        <strong>Estimated End-of-Service Benefit:</strong>
-        ${formatAmount(gratuity)}
-    `;
 }
 
 
-/* =========================================================
-   COMPANY LOGO
-========================================================= */
+/* =========================
+   LOGO PREVIEW
+========================= */
 
-function previewLogo() {
-    const input = document.getElementById("companyLogo");
+function previewLogo(event) {
 
-    const preview = document.getElementById("logoPreview");
+    const file =
+        event?.target?.files?.[0];
 
-    if (!input || !preview) return;
+    if (!file) return;
 
-    const file = input.files?.[0];
 
-    if (!file) {
-        companyLogoData = "";
-        preview.innerHTML = "No logo selected";
-        return;
-    }
+    const reader =
+        new FileReader();
 
-    const reader = new FileReader();
 
-    reader.onload = function (event) {
-        companyLogoData = event.target.result;
+    reader.onload =
+        function (e) {
 
-        preview.innerHTML = `
-            <img
-                src="${companyLogoData}"
-                alt="Company Logo"
-            >
-        `;
-    };
+            companyLogoData =
+                e.target.result;
+
+
+            const preview =
+                document.getElementById(
+                    "logoPreview"
+                );
+
+
+            if (preview) {
+
+                preview.innerHTML =
+                    `<img src="${companyLogoData}" alt="Company Logo">`;
+            }
+
+
+            localStorage.setItem(
+                "gccCompanyLogo",
+                companyLogoData
+            );
+        };
+
 
     reader.readAsDataURL(file);
 }
 
 
-/* =========================================================
-   HTML ESCAPING
-========================================================= */
+/* =========================
+   HTML ESCAPE
+========================= */
 
 function escapeHtml(value) {
-    if (value === null || value === undefined) {
-        return "";
-    }
 
-    return String(value)
+    return String(value || "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -622,153 +827,209 @@ function escapeHtml(value) {
 }
 
 
-/* =========================================================
-   SAVE INVOICE
-========================================================= */
+/* =========================
+   INVOICE DATA
+========================= */
 
 function getInvoiceData() {
-    const country =
-        document.getElementById("country")?.value || "Qatar";
 
     const items = [];
 
-    document
-        .querySelectorAll("#invoiceItems tr")
-        .forEach(row => {
+    const container =
+        document.getElementById(
+            "invoiceItems"
+        );
 
-            const description =
-                row.querySelector(".item-description")?.value || "";
 
-            const quantity =
-                parseFloat(
-                    row.querySelector(".item-quantity")?.value
-                ) || 0;
+    if (container) {
 
-            const price =
-                parseFloat(
-                    row.querySelector(".item-price")?.value
-                        .replace(/,/g, "")
-                ) || 0;
+        container
+            .querySelectorAll("tr")
+            .forEach(function (row) {
 
-            if (description || quantity || price) {
+                const description =
+                    row.querySelector(
+                        ".item-description"
+                    )?.value || "";
+
+
+                const quantity =
+                    parseFloat(
+                        row.querySelector(
+                            ".item-quantity"
+                        )?.value
+                    ) || 0;
+
+
+                const price =
+                    parseFloat(
+                        row.querySelector(
+                            ".item-price"
+                        )?.value
+                    ) || 0;
+
+
                 items.push({
-                    description,
-                    quantity,
-                    price
+                    description: description,
+                    quantity: quantity,
+                    price: price,
+                    total: quantity * price
                 });
-            }
-        });
+            });
+    }
+
 
     return {
-        country,
-        currency: currencies[country] || "QAR",
 
-        company: {
-            name: document.getElementById("companyName")?.value || "",
-            address: document.getElementById("companyAddress")?.value || "",
-            vat: document.getElementById("companyVat")?.value || "",
-            phone: document.getElementById("companyPhone")?.value || "",
-            email: document.getElementById("companyEmail")?.value || ""
-        },
+        companyName:
+            document.getElementById(
+                "companyName"
+            )?.value || "",
 
-        customer: {
-            name: document.getElementById("customerName")?.value || "",
-            vat: document.getElementById("customerVat")?.value || ""
-        },
+        companyAddress:
+            document.getElementById(
+                "companyAddress"
+            )?.value || "",
 
-        invoice: {
-            number: document.getElementById("invoiceNumber")?.value || "",
-            date: document.getElementById("invoiceDate")?.value || "",
-            status: document.getElementById("invoiceStatus")?.value || "Unpaid"
-        },
+        companyVat:
+            document.getElementById(
+                "companyVat"
+            )?.value || "",
 
-        items,
+        companyPhone:
+            document.getElementById(
+                "companyPhone"
+            )?.value || "",
 
-        discount: getNumberValue("invoiceDiscount"),
-        vatRate: getNumberValue("invoiceVat"),
+        companyEmail:
+            document.getElementById(
+                "companyEmail"
+            )?.value || "",
 
-        payment: {
-            bankName: document.getElementById("bankName")?.value || "",
-            accountName: document.getElementById("accountName")?.value || "",
-            accountNumber: document.getElementById("accountNumber")?.value || "",
-            iban: document.getElementById("iban")?.value || ""
-        },
+        invoiceNumber:
+            document.getElementById(
+                "invoiceNumber"
+            )?.value || "",
 
-        terms: document.getElementById("paymentTerms")?.value || "",
-        notes: document.getElementById("invoiceNotes")?.value || "",
+        invoiceDate:
+            document.getElementById(
+                "invoiceDate"
+            )?.value || "",
 
-        logo: companyLogoData,
+        invoiceStatus:
+            document.getElementById(
+                "invoiceStatus"
+            )?.value || "",
 
-        totals: {
-            subtotal: getNumberFromText("invoiceSubtotal"),
-            discount: getNumberFromText("invoiceDiscountAmount"),
-            vat: getNumberFromText("invoiceVatAmount"),
-            total: getNumberFromText("invoiceTotal")
-        },
+        customerName:
+            document.getElementById(
+                "customerName"
+            )?.value || "",
 
-        savedAt: new Date().toISOString()
+        customerVat:
+            document.getElementById(
+                "customerVat"
+            )?.value || "",
+
+        invoiceDiscount:
+            getNumberValue(
+                "invoiceDiscount"
+            ),
+
+        invoiceVat:
+            getNumberValue(
+                "invoiceVat"
+            ),
+
+        bankName:
+            document.getElementById(
+                "bankName"
+            )?.value || "",
+
+        accountName:
+            document.getElementById(
+                "accountName"
+            )?.value || "",
+
+        accountNumber:
+            document.getElementById(
+                "accountNumber"
+            )?.value || "",
+
+        iban:
+            document.getElementById(
+                "iban"
+            )?.value || "",
+
+        paymentTerms:
+            document.getElementById(
+                "paymentTerms"
+            )?.value || "",
+
+        invoiceNotes:
+            document.getElementById(
+                "invoiceNotes"
+            )?.value || "",
+
+        items: items
     };
 }
 
-function saveInvoiceToHistory() {
-    const invoice = getInvoiceData();
 
-    if (!invoice.invoice.number) {
-        return;
-    }
-
-    let history = [];
-
-    try {
-        history = JSON.parse(
-            localStorage.getItem("gccInvoiceHistory") || "[]"
-        );
-    } catch (error) {
-        history = [];
-    }
-
-    const existingIndex = history.findIndex(
-        item => item.invoice.number === invoice.invoice.number
-    );
-
-    if (existingIndex >= 0) {
-        history[existingIndex] = invoice;
-    } else {
-        history.unshift(invoice);
-    }
-
-    /*
-       Keep the most recent 50 invoices.
-    */
-    history = history.slice(0, 50);
-
-    localStorage.setItem(
-        "gccInvoiceHistory",
-        JSON.stringify(history)
-    );
-}
-
-
-/* =========================================================
+/* =========================
    INVOICE HISTORY
-========================================================= */
+========================= */
 
 function getInvoiceHistory() {
+
     try {
+
         return JSON.parse(
-            localStorage.getItem("gccInvoiceHistory") || "[]"
+            localStorage.getItem(
+                "gccInvoiceHistory"
+            ) || "[]"
         );
+
     } catch (error) {
+
         return [];
     }
 }
 
-function deleteInvoiceFromHistory(invoiceNumber) {
-    let history = getInvoiceHistory();
 
-    history = history.filter(
-        invoice => invoice.invoice.number !== invoiceNumber
-    );
+function saveInvoiceToHistory() {
+
+    const data =
+        getInvoiceData();
+
+    if (!data.invoiceNumber) return;
+
+
+    const history =
+        getInvoiceHistory();
+
+
+    const existingIndex =
+        history.findIndex(
+            function (invoice) {
+                return (
+                    invoice.invoiceNumber ===
+                    data.invoiceNumber
+                );
+            }
+        );
+
+
+    if (existingIndex >= 0) {
+
+        history[existingIndex] =
+            data;
+
+    } else {
+
+        history.push(data);
+    }
+
 
     localStorage.setItem(
         "gccInvoiceHistory",
@@ -776,908 +1037,897 @@ function deleteInvoiceFromHistory(invoiceNumber) {
     );
 }
 
-function loadInvoiceFromHistory(invoiceNumber) {
-    const history = getInvoiceHistory();
 
-    const invoice = history.find(
-        item => item.invoice.number === invoiceNumber
+function deleteInvoiceFromHistory(
+    invoiceNumber
+) {
+
+    const history =
+        getInvoiceHistory()
+            .filter(
+                function (invoice) {
+
+                    return (
+                        invoice.invoiceNumber !==
+                        invoiceNumber
+                    );
+                }
+            );
+
+
+    localStorage.setItem(
+        "gccInvoiceHistory",
+        JSON.stringify(history)
     );
-
-    if (!invoice) {
-        alert("Invoice not found.");
-        return;
-    }
-
-    const countrySelect = document.getElementById("country");
-
-    if (countrySelect && invoice.country) {
-        countrySelect.value = invoice.country;
-    }
-
-    const fields = {
-        companyName: invoice.company.name,
-        companyAddress: invoice.company.address,
-        companyVat: invoice.company.vat,
-        companyPhone: invoice.company.phone,
-        companyEmail: invoice.company.email,
-
-        customerName: invoice.customer.name,
-        customerVat: invoice.customer.vat,
-
-        invoiceNumber: invoice.invoice.number,
-        invoiceDate: invoice.invoice.date,
-        invoiceStatus: invoice.invoice.status,
-
-        invoiceDiscount: invoice.discount,
-        invoiceVat: invoice.vatRate,
-
-        bankName: invoice.payment.bankName,
-        accountName: invoice.payment.accountName,
-        accountNumber: invoice.payment.accountNumber,
-        iban: invoice.payment.iban,
-
-        paymentTerms: invoice.terms,
-        invoiceNotes: invoice.notes
-    };
-
-    Object.keys(fields).forEach(id => {
-        const element = document.getElementById(id);
-
-        if (element) {
-            element.value = fields[id];
-        }
-    });
-
-    companyLogoData = invoice.logo || "";
-
-    const preview = document.getElementById("logoPreview");
-
-    if (preview) {
-        if (companyLogoData) {
-            preview.innerHTML = `
-                <img
-                    src="${companyLogoData}"
-                    alt="Company Logo"
-                >
-            `;
-        } else {
-            preview.innerHTML = "No logo selected";
-        }
-    }
-
-    const table = document.getElementById("invoiceItems");
-
-    if (table) {
-        table.innerHTML = "";
-
-        invoice.items.forEach(item => {
-            addInvoiceItem();
-
-            const row =
-                table.lastElementChild;
-
-            const description =
-                row.querySelector(".item-description");
-
-            const quantity =
-                row.querySelector(".item-quantity");
-
-            const price =
-                row.querySelector(".item-price");
-
-            if (description) {
-                description.value = item.description;
-            }
-
-            if (quantity) {
-                quantity.value = item.quantity;
-            }
-
-            if (price) {
-                price.value = formatAmount(item.price);
-            }
-        });
-
-        if (invoice.items.length === 0) {
-            addInvoiceItem();
-        }
-    }
-
-    updateCountry();
-    calculateInvoice();
-
-    showTool("invoice");
 }
 
 
-/* =========================================================
-   PDF INVOICE
-========================================================= */
+function loadInvoiceFromHistory(
+    invoiceNumber
+) {
 
-async function downloadInvoicePDF() {
-    if (
-        typeof window.jspdf === "undefined" ||
-        typeof window.jspdf.jsPDF === "undefined"
-    ) {
-        alert(
-            "PDF library is not loaded. Please check your internet connection and refresh the page."
-        );
+    const history =
+        getInvoiceHistory();
 
-        return;
-    }
 
-    calculateInvoice();
+    const invoice =
+        history.find(
+            function (item) {
 
-    const data = getInvoiceData();
-
-    saveInvoiceToHistory();
-
-    const { jsPDF } = window.jspdf;
-
-    const doc = new jsPDF();
-
-    const currency = data.currency;
-
-    const pageWidth = doc.internal.pageSize.getWidth();
-
-    let y = 20;
-
-    /* -----------------------------------------------------
-       HEADER
-    ----------------------------------------------------- */
-
-    if (data.logo) {
-        try {
-            doc.addImage(
-                data.logo,
-                "AUTO",
-                15,
-                12,
-                35,
-                22
-            );
-        } catch (error) {
-            console.warn("Unable to add logo:", error);
-        }
-    }
-
-    const companyX = data.logo ? 55 : 15;
-
-    doc.setFontSize(18);
-    doc.setFont("helvetica", "bold");
-
-    doc.text(
-        data.company.name || "Company Name",
-        companyX,
-        20
-    );
-
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-
-    let companyY = 27;
-
-    if (data.company.address) {
-        doc.text(
-            data.company.address,
-            companyX,
-            companyY,
-            {
-                maxWidth: 90
+                return (
+                    item.invoiceNumber ===
+                    invoiceNumber
+                );
             }
         );
 
-        companyY += 6;
-    }
 
-    if (data.company.phone) {
-        doc.text(
-            `Phone: ${data.company.phone}`,
-            companyX,
-            companyY
-        );
+    if (!invoice) return;
 
-        companyY += 5;
-    }
 
-    if (data.company.email) {
-        doc.text(
-            `Email: ${data.company.email}`,
-            companyX,
-            companyY
-        );
-
-        companyY += 5;
-    }
-
-    if (data.company.vat) {
-        doc.text(
-            `VAT No.: ${data.company.vat}`,
-            companyX,
-            companyY
-        );
-    }
-
-    /* -----------------------------------------------------
-       INVOICE TITLE
-    ----------------------------------------------------- */
-
-    doc.setFontSize(22);
-    doc.setFont("helvetica", "bold");
-
-    doc.text(
-        "INVOICE",
-        pageWidth - 15,
-        20,
-        {
-            align: "right"
-        }
-    );
-
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-
-    doc.text(
-        `Invoice No.: ${data.invoice.number}`,
-        pageWidth - 15,
-        29,
-        {
-            align: "right"
-        }
-    );
-
-    doc.text(
-        `Date: ${data.invoice.date}`,
-        pageWidth - 15,
-        35,
-        {
-            align: "right"
-        }
-    );
-
-    doc.text(
-        `Status: ${data.invoice.status}`,
-        pageWidth - 15,
-        41,
-        {
-            align: "right"
-        }
-    );
-
-    /* -----------------------------------------------------
-       CUSTOMER
-    ----------------------------------------------------- */
-
-    y = 62;
-
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "bold");
-
-    doc.text("Bill To", 15, y);
-
-    y += 7;
-
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-
-    doc.text(
-        data.customer.name || "Customer",
-        15,
-        y
-    );
-
-    y += 6;
-
-    if (data.customer.vat) {
-        doc.text(
-            `VAT No.: ${data.customer.vat}`,
-            15,
-            y
-        );
-
-        y += 6;
-    }
-
-    /* -----------------------------------------------------
-       ITEMS TABLE
-    ----------------------------------------------------- */
-
-    const tableBody = data.items.map(item => [
-        item.description || "",
-        item.quantity.toString(),
-        `${currency} ${formatAmount(item.price)}`,
-        `${currency} ${formatAmount(item.quantity * item.price)}`
-    ]);
-
-    if (tableBody.length === 0) {
-        tableBody.push([
-            "",
-            "0",
-            `${currency} 0.00`,
-            `${currency} 0.00`
-        ]);
-    }
-
-    if (typeof doc.autoTable === "function") {
-        doc.autoTable({
-            startY: y + 5,
-            head: [
-                [
-                    "Description",
-                    "Qty",
-                    "Unit Price",
-                    "Amount"
-                ]
-            ],
-            body: tableBody,
-            theme: "grid",
-            styles: {
-                fontSize: 9,
-                cellPadding: 4
-            },
-            headStyles: {
-                fontStyle: "bold"
-            },
-            columnStyles: {
-                0: {
-                    cellWidth: 85
-                },
-                1: {
-                    cellWidth: 20,
-                    halign: "center"
-                },
-                2: {
-                    cellWidth: 35,
-                    halign: "right"
-                },
-                3: {
-                    cellWidth: 35,
-                    halign: "right"
-                }
-            }
-        });
-
-        y = doc.lastAutoTable.finalY + 10;
-    } else {
-        y += 15;
-
-        tableBody.forEach(row => {
-            doc.text(row[0], 15, y);
-            doc.text(row[1], 105, y);
-            doc.text(row[2], 130, y);
-            doc.text(row[3], 170, y);
-
-            y += 7;
-        });
-
-        y += 10;
-    }
-
-    /* -----------------------------------------------------
-       TOTALS
-    ----------------------------------------------------- */
-
-    const totalsX = pageWidth - 85;
-
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-
-    doc.text(
-        "Subtotal:",
-        totalsX,
-        y
-    );
-
-    doc.text(
-        `${currency} ${formatAmount(data.totals.subtotal)}`,
-        pageWidth - 15,
-        y,
-        {
-            align: "right"
-        }
-    );
-
-    y += 7;
-
-    doc.text(
-        "Discount:",
-        totalsX,
-        y
-    );
-
-    doc.text(
-        `${currency} ${formatAmount(data.totals.discount)}`,
-        pageWidth - 15,
-        y,
-        {
-            align: "right"
-        }
-    );
-
-    y += 7;
-
-    doc.text(
-        `VAT (${formatAmount(data.vatRate)}%):`,
-        totalsX,
-        y
-    );
-
-    doc.text(
-        `${currency} ${formatAmount(data.totals.vat)}`,
-        pageWidth - 15,
-        y,
-        {
-            align: "right"
-        }
-    );
-
-    y += 10;
-
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
-
-    doc.text(
-        "TOTAL:",
-        totalsX,
-        y
-    );
-
-    doc.text(
-        `${currency} ${formatAmount(data.totals.total)}`,
-        pageWidth - 15,
-        y,
-        {
-            align: "right"
-        }
-    );
-
-    y += 15;
-
-    /* -----------------------------------------------------
-       PAYMENT DETAILS
-    ----------------------------------------------------- */
-
-    if (
-        data.payment.bankName ||
-        data.payment.accountName ||
-        data.payment.accountNumber ||
-        data.payment.iban
-    ) {
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "bold");
-
-        doc.text(
-            "Payment Details",
-            15,
-            y
-        );
-
-        y += 7;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-
-        if (data.payment.bankName) {
-            doc.text(
-                `Bank: ${data.payment.bankName}`,
-                15,
-                y
-            );
-
-            y += 5;
-        }
-
-        if (data.payment.accountName) {
-            doc.text(
-                `Account Name: ${data.payment.accountName}`,
-                15,
-                y
-            );
-
-            y += 5;
-        }
-
-        if (data.payment.accountNumber) {
-            doc.text(
-                `Account Number: ${data.payment.accountNumber}`,
-                15,
-                y
-            );
-
-            y += 5;
-        }
-
-        if (data.payment.iban) {
-            doc.text(
-                `IBAN: ${data.payment.iban}`,
-                15,
-                y
-            );
-
-            y += 5;
-        }
-
-        y += 8;
-    }
-
-    /* -----------------------------------------------------
-       TERMS
-    ----------------------------------------------------- */
-
-    if (data.terms) {
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "bold");
-
-        doc.text(
-            "Payment Terms",
-            15,
-            y
-        );
-
-        y += 6;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-
-        const termsLines = doc.splitTextToSize(
-            data.terms,
-            pageWidth - 30
-        );
-
-        doc.text(
-            termsLines,
-            15,
-            y
-        );
-
-        y += termsLines.length * 5 + 8;
-    }
-
-    /* -----------------------------------------------------
-       NOTES
-    ----------------------------------------------------- */
-
-    if (data.notes) {
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "bold");
-
-        doc.text(
-            "Notes",
-            15,
-            y
-        );
-
-        y += 6;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-
-        const notesLines = doc.splitTextToSize(
-            data.notes,
-            pageWidth - 30
-        );
-
-        doc.text(
-            notesLines,
-            15,
-            y
-        );
-    }
-
-    /* -----------------------------------------------------
-       FOOTER
-    ----------------------------------------------------- */
-
-    const pageHeight =
-        doc.internal.pageSize.getHeight();
-
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-
-    doc.text(
-        "Generated by GCC Finance Tools",
-        pageWidth / 2,
-        pageHeight - 10,
-        {
-            align: "center"
-        }
-    );
-
-    /* -----------------------------------------------------
-       SAVE PDF
-    ----------------------------------------------------- */
-
-    const filename =
-        `${data.invoice.number || "Invoice"}.pdf`;
-
-    doc.save(filename);
-}
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    /* -----------------------------------------------------
-       Country
-    ----------------------------------------------------- */
-
-    const countrySelect =
-        document.getElementById("country");
-
-    if (countrySelect) {
-        updateCountry();
-
-        countrySelect.addEventListener(
-            "change",
-            updateCountry
-        );
-    }
-
-
-    /* -----------------------------------------------------
-       Invoice Date
-    ----------------------------------------------------- */
-
-    const invoiceDate =
-        document.getElementById("invoiceDate");
-
-    if (invoiceDate && !invoiceDate.value) {
-        invoiceDate.value =
-            new Date().toISOString().split("T")[0];
-    }
-
-
-    /* -----------------------------------------------------
-       Invoice Number
-    ----------------------------------------------------- */
-
-    const invoiceNumber =
-        document.getElementById("invoiceNumber");
-
-    if (
-        invoiceNumber &&
-        !invoiceNumber.value
-    ) {
-        setNewInvoiceNumber();
-    }
-
-
-    /* -----------------------------------------------------
-       Invoice Status
-    ----------------------------------------------------- */
-
-    const invoiceStatus =
-        document.getElementById("invoiceStatus");
-
-    if (invoiceStatus && !invoiceStatus.value) {
-        invoiceStatus.value = "Unpaid";
-    }
-
-
-    /* -----------------------------------------------------
-       Invoice Items
-    ----------------------------------------------------- */
-
-    const invoiceItems =
-        document.getElementById("invoiceItems");
-
-    if (
-        invoiceItems &&
-        invoiceItems.children.length === 0
-    ) {
-        addInvoiceItem();
-    }
-
-
-    /* -----------------------------------------------------
-       Number Input Formatting
-    ----------------------------------------------------- */
-
-    document.addEventListener(
-        "input",
-        function (event) {
-
-            const target = event.target;
-
-            if (
-                target.matches(
-                    "#salary, #invoiceDiscount, #invoiceVat, #vatAmount, #vatRate, #gratuitySalary, #gratuityYears, .item-price"
-                )
-            ) {
-                /*
-                   Do not format while the user is entering
-                   a decimal point manually.
-                */
-                if (
-                    target.value &&
-                    target.value.endsWith(".")
-                ) {
-                    return;
-                }
-
-                formatNumberInput(target);
-            }
-
-            if (
-                target.matches(
-                    ".item-quantity, .item-price"
-                )
-            ) {
-                calculateInvoice();
-            }
-        }
-    );
-
-
-    /* -----------------------------------------------------
-       Invoice Calculations
-    ----------------------------------------------------- */
-
-    calculateInvoice();
-
-
-    /* -----------------------------------------------------
-       Restore Saved Company Information
-       If available
-    ----------------------------------------------------- */
-
-    try {
-
-        const savedCompany =
-            JSON.parse(
-                localStorage.getItem(
-                    "gccCompanyInformation"
-                ) || "null"
-            );
-
-        if (savedCompany) {
-
-            const companyFields = {
-                companyName: savedCompany.name,
-                companyAddress: savedCompany.address,
-                companyVat: savedCompany.vat,
-                companyPhone: savedCompany.phone,
-                companyEmail: savedCompany.email
-            };
-
-            Object.keys(companyFields).forEach(id => {
-
-                const element =
-                    document.getElementById(id);
-
-                if (
-                    element &&
-                    !element.value &&
-                    companyFields[id]
-                ) {
-                    element.value =
-                        companyFields[id];
-                }
-            });
-        }
-
-    } catch (error) {
-        console.warn(
-            "Unable to restore company information."
-        );
-    }
-
-
-    /* -----------------------------------------------------
-       Automatically Save Company Information
-    ----------------------------------------------------- */
-
-    const companyFieldIds = [
+    const fields = [
         "companyName",
         "companyAddress",
         "companyVat",
         "companyPhone",
-        "companyEmail"
+        "companyEmail",
+        "invoiceNumber",
+        "invoiceDate",
+        "invoiceStatus",
+        "customerName",
+        "customerVat",
+        "invoiceDiscount",
+        "invoiceVat",
+        "bankName",
+        "accountName",
+        "accountNumber",
+        "iban",
+        "paymentTerms",
+        "invoiceNotes"
     ];
 
-    companyFieldIds.forEach(id => {
+
+    fields.forEach(function (id) {
 
         const element =
             document.getElementById(id);
 
-        if (!element) return;
 
-        element.addEventListener(
-            "input",
-            function () {
-
-                const companyData = {
-                    name:
-                        document.getElementById(
-                            "companyName"
-                        )?.value || "",
-
-                    address:
-                        document.getElementById(
-                            "companyAddress"
-                        )?.value || "",
-
-                    vat:
-                        document.getElementById(
-                            "companyVat"
-                        )?.value || "",
-
-                    phone:
-                        document.getElementById(
-                            "companyPhone"
-                        )?.value || "",
-
-                    email:
-                        document.getElementById(
-                            "companyEmail"
-                        )?.value || ""
-                };
-
-                localStorage.setItem(
-                    "gccCompanyInformation",
-                    JSON.stringify(companyData)
-                );
-            }
-        );
+        if (
+            element &&
+            invoice[id] !== undefined
+        ) {
+            element.value =
+                invoice[id];
+        }
     });
 
 
-    /* -----------------------------------------------------
-       Logo Persistence
-    ----------------------------------------------------- */
-
-    const savedLogo =
-        localStorage.getItem(
-            "gccCompanyLogo"
+    const container =
+        document.getElementById(
+            "invoiceItems"
         );
 
-    if (savedLogo) {
 
-        companyLogoData = savedLogo;
+    if (container) {
 
-        const preview =
-            document.getElementById("logoPreview");
+        container.innerHTML = "";
 
-        if (preview) {
-            preview.innerHTML = `
-                <img
-                    src="${savedLogo}"
-                    alt="Company Logo"
-                >
-            `;
+
+        invoice.items.forEach(
+            function (item) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+                    <td>
+                        <input
+                            type="text"
+                            class="item-description"
+                            value="${escapeHtml(item.description)}"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            class="item-quantity"
+                            value="${item.quantity}"
+                            min="0"
+                        >
+                    </td>
+
+                    <td>
+                        <input
+                            type="number"
+                            class="item-price"
+                            value="${item.price}"
+                            min="0"
+                            step="0.01"
+                        >
+                    </td>
+
+                    <td>
+                        <span class="item-total">
+                            ${formatAmount(item.total)}
+                        </span>
+                    </td>
+
+                    <td>
+                        <button
+                            type="button"
+                            class="remove-item-button"
+                        >
+                            Remove
+                        </button>
+                    </td>
+                `;
+
+
+                container.appendChild(row);
+
+
+                row.querySelector(
+                    ".item-quantity"
+                )?.addEventListener(
+                    "input",
+                    calculateInvoice
+                );
+
+
+                row.querySelector(
+                    ".item-price"
+                )?.addEventListener(
+                    "input",
+                    calculateInvoice
+                );
+
+
+                row.querySelector(
+                    ".remove-item-button"
+                )?.addEventListener(
+                    "click",
+                    function () {
+
+                        row.remove();
+
+                        calculateInvoice();
+                    }
+                );
+            }
+        );
+    }
+
+
+    calculateInvoice();
+}
+
+
+/* =========================
+   PDF
+========================= */
+
+function downloadInvoicePDF() {
+
+    if (
+        typeof window.jspdf ===
+        "undefined"
+    ) {
+
+        alert(
+            "PDF library is not available."
+        );
+
+        return;
+    }
+
+
+    saveInvoiceToHistory();
+
+
+    const { jsPDF } =
+        window.jspdf;
+
+
+    const doc =
+        new jsPDF();
+
+
+    const data =
+        getInvoiceData();
+
+
+    let y = 20;
+
+
+    if (companyLogoData) {
+
+        try {
+
+            doc.addImage(
+                companyLogoData,
+                "PNG",
+                15,
+                10,
+                40,
+                25
+            );
+
+        } catch (error) {
+
+            console.log(
+                "Logo could not be added."
+            );
         }
     }
 
 
-    /* -----------------------------------------------------
-       Save Logo When Uploaded
-    ----------------------------------------------------- */
+    doc.setFontSize(18);
 
-    const logoInput =
-        document.getElementById("companyLogo");
 
-    if (logoInput) {
+    doc.text(
+        data.companyName ||
+        "Invoice",
+        60,
+        y
+    );
 
-        logoInput.addEventListener(
-            "change",
-            function () {
 
-                setTimeout(() => {
+    y += 10;
 
-                    if (companyLogoData) {
 
-                        localStorage.setItem(
-                            "gccCompanyLogo",
-                            companyLogoData
-                        );
-                    }
+    doc.setFontSize(10);
 
-                }, 100);
+
+    if (data.companyAddress) {
+
+        doc.text(
+            data.companyAddress,
+            60,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.companyPhone) {
+
+        doc.text(
+            "Phone: " +
+            data.companyPhone,
+            60,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.companyEmail) {
+
+        doc.text(
+            "Email: " +
+            data.companyEmail,
+            60,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    y += 10;
+
+
+    doc.setFontSize(16);
+
+
+    doc.text(
+        "INVOICE",
+        15,
+        y
+    );
+
+
+    y += 10;
+
+
+    doc.setFontSize(10);
+
+
+    doc.text(
+        "Invoice No: " +
+        data.invoiceNumber,
+        15,
+        y
+    );
+
+
+    doc.text(
+        "Date: " +
+        data.invoiceDate,
+        120,
+        y
+    );
+
+
+    y += 7;
+
+
+    doc.text(
+        "Customer: " +
+        data.customerName,
+        15,
+        y
+    );
+
+
+    y += 12;
+
+
+    const tableRows =
+        data.items.map(
+            function (item) {
+
+                return [
+                    item.description,
+                    item.quantity,
+                    formatAmount(
+                        item.price
+                    ),
+                    formatAmount(
+                        item.total
+                    )
+                ];
             }
+        );
+
+
+    if (
+        typeof doc.autoTable ===
+        "function"
+    ) {
+
+        doc.autoTable({
+
+            startY: y,
+
+            head: [[
+                "Description",
+                "Qty",
+                "Unit Price",
+                "Total"
+            ]],
+
+            body: tableRows,
+
+            theme: "grid"
+        });
+
+
+        y =
+            doc.lastAutoTable.finalY +
+            10;
+
+    } else {
+
+        tableRows.forEach(
+            function (row) {
+
+                doc.text(
+                    row.join(" | "),
+                    15,
+                    y
+                );
+
+                y += 7;
+            }
+        );
+
+        y += 10;
+    }
+
+
+    const subtotal =
+        getNumberFromText(
+            document.getElementById(
+                "invoiceSubtotal"
+            )?.textContent
+        );
+
+
+    const discount =
+        getNumberFromText(
+            document.getElementById(
+                "invoiceDiscountAmount"
+            )?.textContent
+        );
+
+
+    const vat =
+        getNumberFromText(
+            document.getElementById(
+                "invoiceVatAmount"
+            )?.textContent
+        );
+
+
+    const total =
+        getNumberFromText(
+            document.getElementById(
+                "invoiceTotal"
+            )?.textContent
+        );
+
+
+    doc.text(
+        "Subtotal: " +
+        formatAmount(subtotal),
+        140,
+        y
+    );
+
+
+    y += 7;
+
+
+    doc.text(
+        "Discount: " +
+        formatAmount(discount),
+        140,
+        y
+    );
+
+
+    y += 7;
+
+
+    doc.text(
+        "VAT: " +
+        formatAmount(vat),
+        140,
+        y
+    );
+
+
+    y += 8;
+
+
+    doc.setFontSize(12);
+
+
+    doc.text(
+        "Total: " +
+        formatAmount(total),
+        140,
+        y
+    );
+
+
+    y += 15;
+
+
+    doc.setFontSize(10);
+
+
+    if (data.bankName) {
+
+        doc.text(
+            "Bank: " +
+            data.bankName,
+            15,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.accountName) {
+
+        doc.text(
+            "Account Name: " +
+            data.accountName,
+            15,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.accountNumber) {
+
+        doc.text(
+            "Account Number: " +
+            data.accountNumber,
+            15,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.iban) {
+
+        doc.text(
+            "IBAN: " +
+            data.iban,
+            15,
+            y
+        );
+
+        y += 6;
+    }
+
+
+    if (data.paymentTerms) {
+
+        doc.text(
+            "Payment Terms: " +
+            data.paymentTerms,
+            15,
+            y
+        );
+
+        y += 8;
+    }
+
+
+    if (data.invoiceNotes) {
+
+        doc.text(
+            "Notes: " +
+            data.invoiceNotes,
+            15,
+            y
         );
     }
 
-});
+
+    doc.save(
+        (data.invoiceNumber ||
+            "invoice") +
+        ".pdf"
+    );
+}
+
+
+/* =========================
+   AUTO CALCULATION
+========================= */
+
+function setupAutoCalculation() {
+
+    /* Salary */
+
+    [
+        "basicSalary",
+        "allowances",
+        "deductions"
+    ].forEach(function (id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.addEventListener(
+                "input",
+                calculateSalary
+            );
+        }
+    });
+
+
+    /* VAT */
+
+    [
+        "vatAmount",
+        "vatRate"
+    ].forEach(function (id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.addEventListener(
+                "input",
+                calculateVAT
+            );
+
+            element.addEventListener(
+                "change",
+                calculateVAT
+            );
+        }
+    });
+
+
+    /* Gratuity */
+
+    [
+        "gratuityBasicSalary",
+        "gratuityYears",
+        "gratuityDays"
+    ].forEach(function (id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.addEventListener(
+                "input",
+                calculateGratuity
+            );
+
+            element.addEventListener(
+                "change",
+                calculateGratuity
+            );
+        }
+    });
+
+
+    /* Invoice */
+
+    [
+        "invoiceDiscount",
+        "invoiceVat"
+    ].forEach(function (id) {
+
+        const element =
+            document.getElementById(id);
+
+        if (element) {
+
+            element.addEventListener(
+                "input",
+                calculateInvoice
+            );
+
+            element.addEventListener(
+                "change",
+                calculateInvoice
+            );
+        }
+    });
+}
+
+
+/* =========================
+   INITIALIZATION
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /* Country */
+
+        const country =
+            document.getElementById(
+                "country"
+            );
+
+
+        if (country) {
+
+            country.addEventListener(
+                "change",
+                updateCountry
+            );
+        }
+
+
+        /* Company information */
+
+        const companyFields = [
+            "companyName",
+            "companyAddress",
+            "companyVat",
+            "companyPhone",
+            "companyEmail"
+        ];
+
+
+        companyFields.forEach(
+            function (id) {
+
+                const element =
+                    document.getElementById(
+                        id
+                    );
+
+
+                if (!element) return;
+
+
+                const savedValue =
+                    localStorage.getItem(
+                        "gcc_" + id
+                    );
+
+
+                if (
+                    savedValue !== null
+                ) {
+                    element.value =
+                        savedValue;
+                }
+
+
+                element.addEventListener(
+                    "input",
+                    function () {
+
+                        localStorage.setItem(
+                            "gcc_" + id,
+                            element.value
+                        );
+                    }
+                );
+            }
+        );
+
+
+        /* Logo */
+
+        const savedLogo =
+            localStorage.getItem(
+                "gccCompanyLogo"
+            );
+
+
+        if (savedLogo) {
+
+            companyLogoData =
+                savedLogo;
+
+
+            const preview =
+                document.getElementById(
+                    "logoPreview"
+                );
+
+
+            if (preview) {
+
+                preview.innerHTML =
+                    `<img src="${savedLogo}" alt="Company Logo">`;
+            }
+        }
+
+
+        /* Logo upload */
+
+        const logoInput =
+            document.getElementById(
+                "companyLogo"
+            );
+
+
+        if (logoInput) {
+
+            logoInput.addEventListener(
+                "change",
+                previewLogo
+            );
+        }
+
+
+        /* Invoice number */
+
+        const invoiceNumber =
+            document.getElementById(
+                "invoiceNumber"
+            );
+
+
+        if (
+            invoiceNumber &&
+            !invoiceNumber.value
+        ) {
+
+            invoiceNumber.value =
+                generateInvoiceNumber();
+        }
+
+
+        /* Invoice date */
+
+        const invoiceDate =
+            document.getElementById(
+                "invoiceDate"
+            );
+
+
+        if (
+            invoiceDate &&
+            !invoiceDate.value
+        ) {
+
+            invoiceDate.value =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+        }
+
+
+        /* Initial invoice item */
+
+        const invoiceItems =
+            document.getElementById(
+                "invoiceItems"
+            );
+
+
+        if (
+            invoiceItems &&
+            invoiceItems.children.length === 0
+        ) {
+
+            addInvoiceItem();
+        }
+
+
+        /* Setup calculations */
+
+        setupAutoCalculation();
+
+
+        /* Apply country VAT */
+
+        updateCountry();
+
+
+        /* Initial calculations */
+
+        calculateSalary();
+        calculateInvoice();
+        calculateVAT();
+        calculateGratuity();
+
+
+        /* Start on home */
+
+        const dashboard =
+            document.getElementById(
+                "dashboard"
+            );
+
+
+        if (dashboard) {
+            dashboard.style.display =
+                "grid";
+        }
+    }
+);

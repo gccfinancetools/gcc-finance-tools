@@ -6,12 +6,26 @@
 
     <title>GCC Finance Tools</title>
 
+    <meta
+        name="description"
+        content="Simple finance and business tools for the GCC including salary, VAT, invoice and gratuity calculators."
+    >
+
     <link rel="stylesheet" href="style.css">
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
+    </script>
 </head>
 
 <body>
 
 <header class="header">
+
     <div class="container">
 
         <h1>GCC Finance Tools</h1>
@@ -21,6 +35,50 @@
         </p>
 
     </div>
+
+
+    <!-- MAIN MENU -->
+
+    <nav class="main-menu">
+
+        <button
+            type="button"
+            onclick="goHome()">
+            Home
+        </button>
+
+        <button
+            type="button"
+            onclick="showTool('dashboard')">
+            Tools
+        </button>
+
+        <button
+            type="button"
+            onclick="showPage('about')">
+            About Us
+        </button>
+
+        <button
+            type="button"
+            onclick="showPage('notes')">
+            Notes & Guides
+        </button>
+
+        <button
+            type="button"
+            onclick="showPage('careers')">
+            Careers
+        </button>
+
+        <button
+            type="button"
+            onclick="showPage('contact')">
+            Contact Us
+        </button>
+
+    </nav>
+
 </header>
 
 
@@ -34,33 +92,30 @@
             Select Country
         </label>
 
-        <select
-            id="country"
-            onchange="updateCountry()"
-        >
+        <select id="country">
 
-            <option value="qatar">
-                🇶🇦 Qatar
+            <option value="Qatar">
+                Qatar
             </option>
 
-            <option value="saudi">
-                🇸🇦 Saudi Arabia
+            <option value="Saudi Arabia">
+                Saudi Arabia
             </option>
 
-            <option value="uae">
-                🇦🇪 United Arab Emirates
+            <option value="United Arab Emirates">
+                United Arab Emirates
             </option>
 
-            <option value="kuwait">
-                🇰🇼 Kuwait
+            <option value="Kuwait">
+                Kuwait
             </option>
 
-            <option value="oman">
-                🇴🇲 Oman
+            <option value="Oman">
+                Oman
             </option>
 
-            <option value="bahrain">
-                🇧🇭 Bahrain
+            <option value="Bahrain">
+                Bahrain
             </option>
 
         </select>
@@ -73,985 +128,1114 @@
 <main class="container">
 
 
-    <!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
 
-    <section class="dashboard">
+<section
+    id="dashboard"
+    class="dashboard"
+    style="display: grid;"
+>
 
-        <div
-            class="tool-card"
-            onclick="showTool('salary')"
-        >
-
-            <div class="tool-icon">
-                💰
-            </div>
-
-            <h2>
-                Salary Calculator
-            </h2>
-
-            <p>
-                Calculate salary deductions
-                and take-home salary.
-            </p>
-
-        </div>
-
-
-        <div
-            class="tool-card"
-            onclick="showTool('invoice')"
-        >
-
-            <div class="tool-icon">
-                🧾
-            </div>
-
-            <h2>
-                Invoice Generator
-            </h2>
-
-            <p>
-                Create and download
-                professional invoices.
-            </p>
-
-        </div>
-
-
-        <div
-            class="tool-card"
-            onclick="showTool('vat')"
-        >
-
-            <div class="tool-icon">
-                📊
-            </div>
-
-            <h2>
-                VAT Calculator
-            </h2>
-
-            <p>
-                Calculate VAT inclusive
-                and exclusive amounts.
-            </p>
-
-        </div>
-
-
-        <div
-            class="tool-card"
-            onclick="showTool('gratuity')"
-        >
-
-            <div class="tool-icon">
-                🏆
-            </div>
-
-            <h2>
-                Gratuity Calculator
-            </h2>
-
-            <p>
-                Calculate end-of-service
-                gratuity.
-            </p>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =========================
-         SALARY CALCULATOR
-    ========================== -->
-
-    <section
-        id="salary"
-        class="tool-section"
+    <div
+        class="tool-card"
+        onclick="showTool('salary')"
     >
 
-        <div class="tool-header">
-
-            <button
-                class="back-button"
-                onclick="hideTools()"
-            >
-                ← Back
-            </button>
-
-            <h2>
-                Salary Calculator
-            </h2>
-
+        <div class="tool-icon">
+            💰
         </div>
 
+        <h2>
+            Salary Calculator
+        </h2>
 
-        <div class="form-grid">
+        <p>
+            Calculate your net salary after allowances and deductions.
+        </p>
 
-
-            <div>
-
-                <label>
-                    Basic Salary
-                </label>
-
-                <input
-                    type="text"
-                    id="basicSalary"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
-
-            </div>
+    </div>
 
 
-            <div>
+    <div
+        class="tool-card"
+        onclick="showTool('invoice')"
+    >
 
-                <label>
-                    Allowances
-                </label>
-
-                <input
-                    type="text"
-                    id="allowances"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Deductions
-                </label>
-
-                <input
-                    type="text"
-                    id="salaryDeductions"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
-
-            </div>
-
-
+        <div class="tool-icon">
+            🧾
         </div>
 
+        <h2>
+            Invoice Generator
+        </h2>
+
+        <p>
+            Create professional invoices and download them as PDF.
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool-card"
+        onclick="showTool('vat')"
+    >
+
+        <div class="tool-icon">
+            📊
+        </div>
+
+        <h2>
+            VAT Calculator
+        </h2>
+
+        <p>
+            Calculate VAT and total amounts based on the selected GCC country.
+        </p>
+
+    </div>
+
+
+    <div
+        class="tool-card"
+        onclick="showTool('gratuity')"
+    >
+
+        <div class="tool-icon">
+            🎁
+        </div>
+
+        <h2>
+            Gratuity Calculator
+        </h2>
+
+        <p>
+            Estimate end-of-service gratuity based on salary and service period.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT US
+========================= -->
+
+<section
+    id="about"
+    class="tool-section content-page"
+>
+
+    <div class="tool-header">
 
         <button
-            class="primary-button"
-            onclick="calculateSalary()"
+            type="button"
+            class="back-button"
+            onclick="goHome()"
         >
-            Calculate Salary
+            ← Back
         </button>
 
+        <h2>
+            About Us
+        </h2>
 
-        <div
-            id="salaryResult"
-            class="result-box"
-        ></div>
+    </div>
 
-    </section>
+    <p>
+        GCC Finance Tools provides simple online finance and business
+        calculators designed for users across the Gulf Cooperation Council
+        countries.
+    </p>
 
+    <p>
+        Our tools are designed to make common financial calculations
+        easier and faster, including salary calculations, VAT calculations,
+        invoice creation and gratuity estimates.
+    </p>
 
-
-    <!-- =========================
-         INVOICE GENERATOR
-    ========================== -->
-
-    <section
-        id="invoice"
-        class="tool-section"
-    >
-
-
-        <div class="tool-header">
-
-            <button
-                class="back-button"
-                onclick="hideTools()"
-            >
-                ← Back
-            </button>
-
-            <h2>
-                Invoice Generator
-            </h2>
-
-        </div>
+</section>
 
 
-        <!-- NEW INVOICE -->
+<!-- =========================
+     NOTES & GUIDES
+========================= -->
 
-        <div class="invoice-top-actions">
+<section
+    id="notes"
+    class="tool-section content-page"
+>
 
-            <button
-                class="new-invoice-button"
-                onclick="newInvoice()"
-            >
-                + New Invoice
-            </button>
+    <div class="tool-header">
 
-        </div>
+        <button
+            type="button"
+            class="back-button"
+            onclick="goHome()"
+        >
+            ← Back
+        </button>
 
+        <h2>
+            Notes & Guides
+        </h2>
 
+    </div>
 
-        <!-- COMPANY INFORMATION -->
+    <h3>
+        Salary
+    </h3>
 
-        <h3>
-            Company Information
-        </h3>
-
-
-        <div class="invoice-info-grid">
-
-
-            <div>
-
-                <label>
-                    Company Name
-                </label>
-
-                <input
-                    type="text"
-                    id="companyName"
-                    placeholder="Company Name"
-                >
-
-            </div>
+    <p>
+        Use the salary calculator to calculate net salary after adding
+        allowances and deducting applicable deductions.
+    </p>
 
 
-            <div>
+    <h3>
+        VAT
+    </h3>
 
-                <label>
-                    Company VAT Number
-                </label>
-
-                <input
-                    type="text"
-                    id="companyVat"
-                    placeholder="VAT Number"
-                >
-
-            </div>
+    <p>
+        Select the applicable GCC country and the VAT calculator will use
+        the VAT rate configured for that country.
+    </p>
 
 
-            <div>
+    <h3>
+        Invoices
+    </h3>
 
-                <label>
-                    Company Address
-                </label>
-
-                <input
-                    type="text"
-                    id="companyAddress"
-                    placeholder="Company Address"
-                >
-
-            </div>
+    <p>
+        The invoice generator allows you to enter company information,
+        customer information, invoice items, VAT and payment details.
+    </p>
 
 
-            <div>
+    <h3>
+        Gratuity
+    </h3>
 
-                <label>
-                    Company Phone
-                </label>
+    <p>
+        The gratuity calculator provides an estimate based on the salary,
+        years of service and days used for the calculation.
+    </p>
 
-                <input
-                    type="text"
-                    id="companyPhone"
-                    placeholder="Phone Number"
-                >
-
-            </div>
+</section>
 
 
-            <div>
+<!-- =========================
+     CAREERS
+========================= -->
 
-                <label>
-                    Company Email
-                </label>
+<section
+    id="careers"
+    class="tool-section content-page"
+>
 
-                <input
-                    type="email"
-                    id="companyEmail"
-                    placeholder="Email Address"
-                >
+    <div class="tool-header">
 
-            </div>
+        <button
+            type="button"
+            class="back-button"
+            onclick="goHome()"
+        >
+            ← Back
+        </button>
+
+        <h2>
+            Careers
+        </h2>
+
+    </div>
+
+    <p>
+        We are interested in hearing from people who are passionate about
+        finance, accounting, technology and useful online tools.
+    </p>
+
+    <p>
+        Career opportunities will be published here when available.
+    </p>
+
+</section>
 
 
-        </div>
+<!-- =========================
+     CONTACT
+========================= -->
+
+<section
+    id="contact"
+    class="tool-section content-page"
+>
+
+    <div class="tool-header">
+
+        <button
+            type="button"
+            class="back-button"
+            onclick="goHome()"
+        >
+            ← Back
+        </button>
+
+        <h2>
+            Contact Us
+        </h2>
+
+    </div>
+
+    <p>
+        If you have feedback, suggestions or questions about GCC Finance
+        Tools, please contact us.
+    </p>
+
+    <p>
+        Email: contact@gccfinancetools.com
+    </p>
+
+</section>
 
 
+<!-- =========================
+     SALARY CALCULATOR
+========================= -->
 
-        <!-- COMPANY LOGO -->
+<section
+    id="salary"
+    class="tool-section"
+>
 
-        <div class="logo-section">
+    <div class="tool-header">
 
-            <label>
-                Company Logo
+        <button
+            type="button"
+            class="back-button"
+            onclick="goHome()"
+        >
+            ← Back
+        </button>
+
+        <h2>
+            Salary Calculator
+        </h2>
+
+    </div>
+
+
+    <div class="form-grid">
+
+        <div>
+
+            <label for="basicSalary">
+                Basic Salary
             </label>
 
             <input
-                type="file"
-                id="companyLogo"
-                accept="image/*"
-                onchange="previewLogo()"
+                type="number"
+                id="basicSalary"
+                placeholder="Enter basic salary"
+                min="0"
             >
 
+        </div>
 
-            <div
-                id="logoPreview"
-                class="logo-preview"
+
+        <div>
+
+            <label for="allowances">
+                Allowances
+            </label>
+
+            <input
+                type="number"
+                id="allowances"
+                placeholder="Enter allowances"
+                min="0"
             >
 
-                <span>
-                    No logo selected
-                </span>
-
-            </div>
-
         </div>
 
 
+        <div>
 
-        <!-- INVOICE INFORMATION -->
+            <label for="deductions">
+                Deductions
+            </label>
 
-        <h3>
-            Invoice Information
-        </h3>
-
-
-        <div class="invoice-info-grid">
-
-
-            <div>
-
-                <label>
-                    Invoice Number
-                </label>
-
-                <input
-                    type="text"
-                    id="invoiceNumber"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Invoice Date
-                </label>
-
-                <input
-                    type="date"
-                    id="invoiceDate"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Invoice Status
-                </label>
-
-                <select
-                    id="invoiceStatus"
-                >
-
-                    <option value="Unpaid">
-                        Unpaid
-                    </option>
-
-                    <option value="Paid">
-                        Paid
-                    </option>
-
-                    <option value="Partially Paid">
-                        Partially Paid
-                    </option>
-
-                </select>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- CUSTOMER INFORMATION -->
-
-        <h3>
-            Customer Information
-        </h3>
-
-
-        <div class="invoice-info-grid">
-
-
-            <div>
-
-                <label>
-                    Customer Name
-                </label>
-
-                <input
-                    type="text"
-                    id="customerName"
-                    placeholder="Customer Name"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Customer VAT Number
-                </label>
-
-                <input
-                    type="text"
-                    id="customerVat"
-                    placeholder="VAT Number"
-                >
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- INVOICE ITEMS -->
-
-        <h3>
-            Invoice Items
-        </h3>
-
-
-        <div class="invoice-items-wrapper">
-
-            <table
-                class="invoice-items-table"
+            <input
+                type="number"
+                id="deductions"
+                placeholder="Enter deductions"
+                min="0"
             >
 
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Description
-                        </th>
-
-                        <th>
-                            Quantity
-                        </th>
-
-                        <th>
-                            Unit Price
-                        </th>
-
-                        <th>
-                            Amount
-                        </th>
-
-                        <th>
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody
-                    id="invoiceItems"
-                ></tbody>
-
-            </table>
-
         </div>
 
+    </div>
+
+
+    <div class="result-box">
+
+        <strong>
+            Net Salary:
+        </strong>
+
+        <span
+            id="netSalary"
+        >
+            0.00
+        </span>
+
+        <span class="currency-code">
+            QAR
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     INVOICE
+========================= -->
+
+<section
+    id="invoice"
+    class="tool-section"
+>
+
+    <div class="tool-header">
 
         <button
-            class="secondary-button"
-            onclick="addInvoiceItem()"
+            type="button"
+            class="back-button"
+            onclick="goHome()"
         >
-            + Add Item
+            ← Back
         </button>
 
+        <h2>
+            Invoice Generator
+        </h2>
+
+    </div>
 
 
-        <!-- DISCOUNT / VAT -->
+    <div class="invoice-top-actions">
 
-        <div class="invoice-options">
+        <button
+            type="button"
+            class="new-invoice-button"
+            onclick="newInvoice()"
+        >
+            + New Invoice
+        </button>
 
-
-            <div>
-
-                <label>
-                    Discount
-                </label>
-
-                <input
-                    type="text"
-                    id="invoiceDiscount"
-                    value="0"
-                    inputmode="decimal"
-                    oninput="
-                        formatNumberInput(this);
-                        calculateInvoice()
-                    "
-                >
-
-            </div>
+    </div>
 
 
-            <div>
+    <h3>
+        Company Information
+    </h3>
 
-                <label>
-                    VAT Rate (%)
-                </label>
 
-                <input
-                    type="text"
-                    id="invoiceVat"
-                    value="0"
-                    inputmode="decimal"
-                    oninput="
-                        formatNumberInput(this);
-                        calculateInvoice()
-                    "
-                >
+    <div class="invoice-info-grid">
 
-            </div>
+        <div>
 
+            <label for="companyName">
+                Company Name
+            </label>
+
+            <input
+                type="text"
+                id="companyName"
+                placeholder="Company name"
+            >
 
         </div>
 
 
+        <div>
 
-        <!-- PAYMENT DETAILS -->
+            <label for="companyVat">
+                Company VAT Number
+            </label>
 
-        <h3>
-            Payment Details
-        </h3>
-
-
-        <div class="invoice-extra-grid">
-
-
-            <div>
-
-                <label>
-                    Bank Name
-                </label>
-
-                <input
-                    type="text"
-                    id="bankName"
-                    placeholder="Bank Name"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Account Name
-                </label>
-
-                <input
-                    type="text"
-                    id="accountName"
-                    placeholder="Account Name"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Account Number
-                </label>
-
-                <input
-                    type="text"
-                    id="accountNumber"
-                    placeholder="Account Number"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    IBAN
-                </label>
-
-                <input
-                    type="text"
-                    id="iban"
-                    placeholder="IBAN"
-                >
-
-            </div>
-
+            <input
+                type="text"
+                id="companyVat"
+                placeholder="VAT number"
+            >
 
         </div>
 
 
+        <div>
 
-        <!-- NOTES AND TERMS -->
+            <label for="companyPhone">
+                Phone
+            </label>
 
-        <h3>
-            Notes & Terms
-        </h3>
-
-
-        <div class="invoice-extra-grid">
-
-
-            <div>
-
-                <label>
-                    Payment Terms
-                </label>
-
-                <textarea
-                    id="paymentTerms"
-                    rows="4"
-                    placeholder="Example: Payment due within 30 days."
-                ></textarea>
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Notes
-                </label>
-
-                <textarea
-                    id="invoiceNotes"
-                    rows="4"
-                    placeholder="Additional notes..."
-                ></textarea>
-
-            </div>
-
+            <input
+                type="text"
+                id="companyPhone"
+                placeholder="Phone number"
+            >
 
         </div>
 
 
+        <div>
 
-        <!-- INVOICE TOTALS -->
+            <label for="companyEmail">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="companyEmail"
+                placeholder="Email address"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+        <label for="companyAddress">
+            Company Address
+        </label>
+
+        <textarea
+            id="companyAddress"
+            rows="3"
+            placeholder="Company address"
+        ></textarea>
+
+    </div>
+
+
+    <div class="logo-section">
+
+        <label for="companyLogo">
+            Company Logo
+        </label>
+
+        <input
+            type="file"
+            id="companyLogo"
+            accept="image/*"
+        >
+
 
         <div
-            class="invoice-total-box"
+            id="logoPreview"
+            class="logo-preview"
         >
+            No logo selected
+        </div>
+
+    </div>
 
 
-            <div>
-
-                <span>
-                    Subtotal
-                </span>
-
-                <strong
-                    id="invoiceSubtotal"
-                >
-                    0.00
-                </strong>
-
-            </div>
+    <h3>
+        Invoice Information
+    </h3>
 
 
-            <div>
+    <div class="invoice-info-grid">
 
-                <span>
-                    Discount
-                </span>
+        <div>
 
-                <strong
-                    id="invoiceDiscountAmount"
-                >
-                    0.00
-                </strong>
+            <label for="invoiceNumber">
+                Invoice Number
+            </label>
 
-            </div>
-
-
-            <div>
-
-                <span>
-                    VAT
-                </span>
-
-                <strong
-                    id="invoiceVatAmount"
-                >
-                    0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="grand-total"
+            <input
+                type="text"
+                id="invoiceNumber"
             >
-
-                <span>
-                    Total
-                </span>
-
-                <strong
-                    id="invoiceTotal"
-                >
-                    0.00
-                </strong>
-
-            </div>
-
 
         </div>
 
 
+        <div>
 
-        <!-- PDF -->
+            <label for="invoiceDate">
+                Invoice Date
+            </label>
 
-        <button
-            class="pdf-button"
-            onclick="downloadInvoicePDF()"
-        >
-            Download Invoice PDF
-        </button>
+            <input
+                type="date"
+                id="invoiceDate"
+            >
 
-
-    </section>
-
+        </div>
 
 
-    <!-- =========================
-         VAT CALCULATOR
-    ========================== -->
+        <div>
 
-    <section
-        id="vat"
-        class="tool-section"
+            <label for="invoiceStatus">
+                Status
+            </label>
+
+            <select id="invoiceStatus">
+
+                <option value="Unpaid">
+                    Unpaid
+                </option>
+
+                <option value="Paid">
+                    Paid
+                </option>
+
+                <option value="Partially Paid">
+                    Partially Paid
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Customer Information
+    </h3>
+
+
+    <div class="invoice-info-grid">
+
+        <div>
+
+            <label for="customerName">
+                Customer Name
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="customerVat">
+                Customer VAT Number
+            </label>
+
+            <input
+                type="text"
+                id="customerVat"
+            >
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Invoice Items
+    </h3>
+
+
+    <div class="invoice-items-wrapper">
+
+        <table class="invoice-items-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Description
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                    <th>
+                        Unit Price
+                    </th>
+
+                    <th>
+                        Total
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="invoiceItems">
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="secondary-button"
+        onclick="addInvoiceItem()"
     >
+        + Add Item
+    </button>
 
 
-        <div class="tool-header">
+    <div class="invoice-options">
 
-            <button
-                class="back-button"
-                onclick="hideTools()"
+        <div>
+
+            <label for="invoiceDiscount">
+                Discount
+            </label>
+
+            <input
+                type="number"
+                id="invoiceDiscount"
+                value="0"
+                min="0"
+                step="0.01"
             >
-                ← Back
-            </button>
-
-            <h2>
-                VAT Calculator
-            </h2>
 
         </div>
 
 
-        <div class="form-grid">
+        <div>
+
+            <label for="invoiceVat">
+                VAT %
+            </label>
+
+            <input
+                type="number"
+                id="invoiceVat"
+                value="0"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+    </div>
 
 
-            <div>
-
-                <label>
-                    Amount
-                </label>
-
-                <input
-                    type="text"
-                    id="vatAmount"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
-
-            </div>
+    <h3>
+        Payment Details
+    </h3>
 
 
-            <div>
+    <div class="invoice-extra-grid">
 
-                <label>
-                    VAT Rate (%)
-                </label>
+        <div>
 
-                <input
-                    type="text"
-                    id="vatRate"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
+            <label for="bankName">
+                Bank Name
+            </label>
 
-            </div>
-
-
-            <div>
-
-                <label>
-                    Calculation Type
-                </label>
-
-                <select id="vatType">
-
-                    <option value="exclusive">
-                        Add VAT
-                    </option>
-
-                    <option value="inclusive">
-                        VAT Included
-                    </option>
-
-                </select>
-
-            </div>
-
+            <input
+                type="text"
+                id="bankName"
+            >
 
         </div>
 
 
-        <button
-            class="primary-button"
-            onclick="calculateVAT()"
-        >
-            Calculate VAT
-        </button>
+        <div>
+
+            <label for="accountName">
+                Account Name
+            </label>
+
+            <input
+                type="text"
+                id="accountName"
+            >
+
+        </div>
 
 
-        <div
-            id="vatResult"
-            class="result-box"
-        ></div>
+        <div>
+
+            <label for="accountNumber">
+                Account Number
+            </label>
+
+            <input
+                type="text"
+                id="accountNumber"
+            >
+
+        </div>
 
 
-    </section>
+        <div>
+
+            <label for="iban">
+                IBAN
+            </label>
+
+            <input
+                type="text"
+                id="iban"
+            >
+
+        </div>
 
 
+        <div>
 
-    <!-- =========================
-         GRATUITY
-    ========================== -->
+            <label for="paymentTerms">
+                Payment Terms
+            </label>
 
-    <section
-        id="gratuity"
-        class="tool-section"
+            <input
+                type="text"
+                id="paymentTerms"
+                placeholder="e.g. Payment within 30 days"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="invoiceNotes">
+                Notes
+            </label>
+
+            <textarea
+                id="invoiceNotes"
+                rows="3"
+            ></textarea>
+
+        </div>
+
+    </div>
+
+
+    <div class="invoice-total-box">
+
+        <div>
+
+            <span>
+                Subtotal
+            </span>
+
+            <span>
+                <span id="invoiceSubtotal">
+                    0.00
+                </span>
+
+                <span class="currency-code">
+                    QAR
+                </span>
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Discount
+            </span>
+
+            <span>
+                <span id="invoiceDiscountAmount">
+                    0.00
+                </span>
+
+                <span class="currency-code">
+                    QAR
+                </span>
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                VAT
+            </span>
+
+            <span>
+                <span id="invoiceVatAmount">
+                    0.00
+                </span>
+
+                <span class="currency-code">
+                    QAR
+                </span>
+            </span>
+
+        </div>
+
+
+        <div class="grand-total">
+
+            <strong>
+                Total
+            </strong>
+
+            <strong>
+
+                <span id="invoiceTotal">
+                    0.00
+                </span>
+
+                <span class="currency-code">
+                    QAR
+                </span>
+
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="pdf-button"
+        onclick="downloadInvoicePDF()"
     >
+        Download Invoice PDF
+    </button>
+
+</section>
 
 
-        <div class="tool-header">
+<!-- =========================
+     VAT CALCULATOR
+========================= -->
 
-            <button
-                class="back-button"
-                onclick="hideTools()"
-            >
-                ← Back
-            </button>
+<section
+    id="vat"
+    class="tool-section"
+>
 
-            <h2>
-                Gratuity Calculator
-            </h2>
-
-        </div>
-
-
-        <div class="form-grid">
-
-
-            <div>
-
-                <label>
-                    Basic Salary
-                </label>
-
-                <input
-                    type="text"
-                    id="gratuitySalary"
-                    inputmode="decimal"
-                    placeholder="0"
-                    oninput="formatNumberInput(this)"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Years of Service
-                </label>
-
-                <input
-                    type="number"
-                    id="serviceYears"
-                    min="0"
-                    step="0.01"
-                    placeholder="0"
-                >
-
-            </div>
-
-
-        </div>
-
+    <div class="tool-header">
 
         <button
-            class="primary-button"
-            onclick="calculateGratuity()"
+            type="button"
+            class="back-button"
+            onclick="goHome()"
         >
-            Calculate Gratuity
+            ← Back
         </button>
 
+        <h2>
+            VAT Calculator
+        </h2>
 
-        <div
-            id="gratuityResult"
-            class="result-box"
-        ></div>
+    </div>
 
 
-    </section>
+    <div class="form-grid">
 
+        <div>
+
+            <label for="vatAmount">
+                Amount
+            </label>
+
+            <input
+                type="number"
+                id="vatAmount"
+                placeholder="Enter amount"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="vatRate">
+                VAT Rate (%)
+            </label>
+
+            <input
+                type="number"
+                id="vatRate"
+                value="0"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="result-box">
+
+        <p>
+            <strong>
+                VAT Amount:
+            </strong>
+
+            <span id="vatAmountResult">
+                0.00
+            </span>
+
+            <span class="currency-code">
+                QAR
+            </span>
+        </p>
+
+
+        <p>
+            <strong>
+                Total Including VAT:
+            </strong>
+
+            <span id="vatTotalResult">
+                0.00
+            </span>
+
+            <span class="currency-code">
+                QAR
+            </span>
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     GRATUITY
+========================= -->
+
+<section
+    id="gratuity"
+    class="tool-section"
+>
+
+    <div class="tool-header">
+
+        <button
+            type="button"
+            class="back-button"
+            onclick="goHome()"
+        >
+            ← Back
+        </button>
+
+        <h2>
+            Gratuity / End-of-Service Calculator
+        </h2>
+
+    </div>
+
+
+    <div class="form-grid">
+
+        <div>
+
+            <label for="gratuityBasicSalary">
+                Basic Salary
+            </label>
+
+            <input
+                type="number"
+                id="gratuityBasicSalary"
+                placeholder="Enter basic salary"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="gratuityYears">
+                Years of Service
+            </label>
+
+            <input
+                type="number"
+                id="gratuityYears"
+                placeholder="Enter years"
+                min="0"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="gratuityDays">
+                Gratuity Days per Year
+            </label>
+
+            <input
+                type="number"
+                id="gratuityDays"
+                value="21"
+                min="0"
+                step="1"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="result-box">
+
+        <strong>
+            Estimated Gratuity:
+        </strong>
+
+        <span id="gratuityResult">
+            0.00
+        </span>
+
+        <span class="currency-code">
+            QAR
+        </span>
+
+    </div>
+
+</section>
 
 </main>
 
 
-
-<!-- FOOTER -->
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="footer">
 
     <div class="container">
 
         <p>
-            <strong>
-                GCC Finance Tools
-            </strong>
+            © 2026 GCC Finance Tools
         </p>
 
         <p>
@@ -1062,16 +1246,6 @@
 
 </footer>
 
-
-
-<!-- PDF LIBRARIES -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
-
-<!-- MAIN JAVASCRIPT -->
 
 <script src="script.js"></script>
 

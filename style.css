@@ -429,6 +429,43 @@ label {
 
 
 /* =========================
+   MAIN NAVIGATION MENU
+========================= */
+
+.main-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding: 0 20px 20px;
+}
+
+.main-menu button {
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.main-menu button:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.content-page {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -489,5 +526,16 @@ label {
 
     .invoice-items-table {
         min-width: 700px;
+    }
+
+    .main-menu {
+        gap: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-menu button {
+        padding: 8px 10px;
+        font-size: 14px;
     }
 }
